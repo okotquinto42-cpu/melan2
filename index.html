@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a2a8a">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<title>MELAN</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MELAN">
+<style>
+:root{--bg:#f4f5f9;--c:#fff;--t:#17203a;--m:#6a7390;--p:#0a2a8a;--pt:#fff;--b:#d8dce8;--r:#b42318;--o:#b45309;--g:#15803d}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1220;--c:#171d33;--t:#e8ebf5;--m:#98a1bf;--p:#f59e0b;--pt:#1b1200;--b:#2a3350;--r:#f87171;--o:#fbbf24;--g:#4ade80}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.45 system-ui,sans-serif;background:var(--bg);color:var(--t);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+input,select,textarea,button{font:inherit;color:inherit}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--p);color:var(--pt);position:sticky;top:0;z-index:5}
+header img{height:30px;width:30px;border-radius:8px;vertical-align:middle;margin-right:8px}header a{text-decoration:underline}
+nav{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;background:var(--c);border-bottom:1px solid var(--b)}
+nav button{flex:0 0 auto;border:1px solid var(--b);background:none;border-radius:20px;padding:6px 14px}nav button.on{background:var(--p);color:var(--pt);border-color:var(--p)}
+main{max-width:760px;margin:0 auto;padding:10px}
+.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:12px;margin:0 0 10px}
+.card input,.card select,.card textarea{width:100%;margin:4px 0;padding:9px;border:1px solid var(--b);border-radius:8px;background:var(--bg)}
+textarea{min-height:64px}
+.pri,.card>button{background:var(--p);color:var(--pt);border:0;border-radius:8px;padding:10px 14px;margin-top:6px;width:100%}
+.ghost{background:none!important;color:var(--t)!important;border:1px solid var(--b)!important}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+.m{color:var(--m);font-size:14px}.tag{font-size:12px;border:1px solid var(--b);border-radius:12px;padding:2px 9px;flex:0 0 auto}
+.red{color:var(--r)}.org{color:var(--o)}.grn{color:var(--g)}
+.hero{text-align:center;padding:12px 0}.hero img{width:92px;height:92px;border-radius:22px}.hero p{margin:4px 0;color:var(--m)}
+.sc{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.sc button{min-width:44px;height:44px;border:1px solid var(--b);background:var(--bg);border-radius:10px}.sc button.on{background:var(--p);color:var(--pt);border-color:var(--p)}
+.bar{display:grid;grid-template-columns:100px 1fr 42px;gap:8px;align-items:center;font-size:14px;margin:5px 0}.bar div{height:10px;background:var(--bg);border-radius:5px;overflow:hidden}.bar i{display:block;height:100%}.bar em{font-style:normal;text-align:right}
+.g{background:var(--g)}.o{background:var(--o)}.r{background:var(--r)}
+.chips label{display:inline-block;border:1px solid var(--b);border-radius:16px;padding:4px 12px;margin:3px 4px 3px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid var(--b);padding:4px 6px;text-align:center}td:first-child,th:first-child{text-align:left}.wrap{overflow-x:auto}
+.sheet{position:relative;background:#fff;color:#111;border:1px solid var(--b);padding:16px;border-radius:8px;margin-bottom:12px}
+.paper{background:#fff;color:#111;font-family:"Times New Roman",Times,serif;border:1px solid var(--b);padding:18px;border-radius:6px;margin-bottom:12px}
+.ph{text-align:center;border-bottom:2px solid #111;padding-bottom:8px;margin-bottom:10px}.ph h1{margin:0;font-size:22px;letter-spacing:1px;text-transform:uppercase}.ph h2{margin:4px 0 0;font-size:18px;text-transform:uppercase}.ph h3{margin:2px 0;font-size:16px}
+.ph .mt{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:14px;gap:4px 14px;margin-top:6px}.sheet .ph{padding:0 92px 8px}
+.ln{background:repeating-linear-gradient(transparent 0,transparent 27px,#8a94a6 28px);line-height:28px;min-height:56px;padding:0 6px;white-space:pre-wrap;border:1px solid #777;border-radius:3px;position:relative;margin:4px 0;font-family:"Segoe Print","Bradley Hand","Noteworthy","Comic Sans MS",cursive;color:#1a3a9c}
+.paper textarea.an{width:100%;display:block;margin:4px 0;font-family:inherit;font-size:16px;color:#111;border:1px solid #777;border-radius:3px;background:repeating-linear-gradient(transparent 0,transparent 27px,#8a94a6 28px);line-height:28px;min-height:84px;padding:0 6px}
+.mk{position:absolute;right:6px;bottom:0;color:#c00;font-weight:700;font-size:14px;font-family:Arial,sans-serif}.mkq{float:right;font-weight:700}
+.score{position:absolute;top:12px;right:12px;border:2px solid #b42318;color:#b42318;padding:4px 12px;font-weight:700;border-radius:8px;font-size:20px}
+.qq{margin:12px 0}.ansb{border:1px dashed #888;border-radius:6px;padding:7px 9px;margin:6px 0 2px;min-height:38px;white-space:pre-wrap;position:relative}
+.ansb .pt{position:absolute;right:6px;bottom:2px;color:#b42318;font-weight:700;font-size:13px}.ansb .lb{color:#666;margin-right:6px}
+.cmx{font-family:"Comic Sans MS","Comic Neue","Chalkboard SE",cursive;background:#fff6c7;border:2px solid #e0a800;border-radius:12px;padding:3px 10px;margin:3px 0 6px 20px;color:#b3123f;font-size:15px;display:inline-block}
+.gd{background:#eaf3ff;border-radius:6px;padding:5px 9px;font-size:14px;margin-top:4px}.tot{text-align:right;font-weight:700;color:#b42318}
+@media print{header,nav,.np{display:none!important}body{background:#fff}.sheet{border:0;page-break-after:always}}
+</style></head><body><div id="app"></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const L=['Knowledge','Understanding','Application','Analysis','Evaluation','Creation'];
+const DEF={overN:6,bands:[{min:80,name:'Distinction',c:'Excellent work. Keep it up.'},{min:60,name:'Credit',c:'Good work. Aim higher.'},{min:40,name:'Pass',c:'Fair. More practice needed.'},{min:0,name:'Needs help',c:'Please revise and ask for help.'}]};
+let SET=DEF,SS={},U=JSON.parse(localStorage.getItem('u')||'null'),V='home',C={},G=[],QS=[],QI=0,PID=0;
+const T=['create table if not exists m_schools(id integer primary key autoincrement,name text,tcode text unique,lcode text unique,settings text)',
+'create table if not exists m_users(id integer primary key autoincrement,school_id int,name text,role text,gender text,cls text,pin text)',
+'create table if not exists m_topics(id integer primary key autoincrement,school_id int,cls text,term text,subject text,name text)',
+'create table if not exists m_subtopics(id integer primary key autoincrement,topic_id int,name text)',
+'create table if not exists m_comps(id integer primary key autoincrement,topic_id int,name text)',
+'create table if not exists m_papers(id integer primary key autoincrement,school_id int,teacher_id int,title text,cls text,term text,subject text,status text)',
+'create table if not exists m_questions(id integer primary key autoincrement,paper_id int,n int,text text,marks real,spaces int,bloom text,topic_id int,sub_id int,comp_id int,guide text)',
+'create table if not exists m_submissions(id integer primary key autoincrement,paper_id int,learner_id int)',
+'create table if not exists m_answers(id integer primary key autoincrement,sub_id int,qid int,idx int,answer text,norm text,score real,comment text)',
+'create index if not exists i1 on m_answers(qid,norm)','create index if not exists i2 on m_answers(sub_id)','create index if not exists i3 on m_questions(paper_id)',
+'create index if not exists i4 on m_topics(school_id,subject)','create index if not exists i5 on m_users(school_id,role)','create index if not exists i6 on m_submissions(paper_id,learner_id)'];
+const cfg=()=>JSON.parse(localStorage.getItem('cfg')||'null');
+const AL=['alter table m_comps add column sub_id int','alter table m_papers add column deadline text','alter table m_papers add column pdate text','alter table m_users add column phone text','alter table m_users add column email text','create index if not exists i7 on m_subtopics(topic_id)','create index if not exists i8 on m_comps(topic_id)'];
+async function migrate(){if(localStorage.getItem('mig')==='3')return;for(const q of AL)try{await db(q)}catch(e){}localStorage.setItem('mig','3')}
+async function db(sql,a=[]){const c=cfg();const args=a.map(v=>v==null?{type:'null'}:typeof v==='number'?(Number.isInteger(v)?{type:'integer',value:String(v)}:{type:'float',value:v}):{type:'text',value:String(v)});
+ const r=await fetch(c.url+'/v2/pipeline',{method:'POST',headers:{Authorization:'Bearer '+c.token,'Content-Type':'application/json'},body:JSON.stringify({requests:[{type:'execute',stmt:{sql,args}},{type:'close'}]})});
+ const j=await r.json(),x=j.results&&j.results[0];if(!x||x.type==='error')throw new Error(x?x.error.message:'Database error');
+ const q=x.response.result;return q.rows.map(w=>Object.fromEntries(q.cols.map((c,i)=>[c.name,w[i].value])))}
+const ins=async(s,a)=>Number((await db(s,a))[0].id);
+const hash=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+const opts=(r,k='name')=>r.map(x=>`<option value="${x.id}">${esc(x[k])}</option>`).join('');
+const val=id=>$('#'+id).value.trim(),safe=f=>async(...a)=>{try{await f(...a)}catch(e){alert(e.message)}};
+const pc=t=>t&&t[1]?Math.round(t[0]/t[1]*100):0,band=p=>SET.bands.find(b=>p>=b.min)||SET.bands[SET.bands.length-1];
+const norm=s=>s.toLowerCase().replace(/\s+/g,' ').replace(/[.,;!]+$/,'').trim();
+const bars=b=>L.map(l=>{const v=b[l];if(!v||!v[1])return `<div class=bar><span>${l}</span><div></div><em>-</em></div>`;const p=pc(v);return `<div class=bar><span>${l}</span><div><i class="${p>=70?'g':p>=50?'o':'r'}" style="width:${p}%"></i></div><em>${p}%</em></div>`}).join('');
+const dl=(id,a)=>`<datalist id=${id}>${[...new Set(a)].map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`;
+
+/* ---------- setup, sign in, join ---------- */
+function setup(){const c=cfg()||{};$('#app').innerHTML=`<main><div class=hero><img src=logo-96.png></div><div class=card><h3>Turso database</h3><input id=du placeholder="libsql://your-db.turso.io" value="${esc(c.url||'')}"><input id=dt placeholder="Auth token" value="${esc(c.token||'')}"><button onclick="saveCfg()">Save and prepare tables</button></div></main>`}
+const saveCfg=safe(async()=>{localStorage.setItem('cfg',JSON.stringify({url:val('du').replace('libsql://','https://'),token:val('dt')}));for(const s of T)await db(s);localStorage.removeItem('mig');await migrate();auth()});
+function auth(){$('#app').innerHTML=`<main><div class=hero><img src=logo-96.png><p>Learn. Practice. Grow.</p></div>
+<div class=card><h3>Sign in</h3><input id=sc placeholder="School code (teacher or learner code)"><input id=nm placeholder="Your name"><input id=pn type=password placeholder="PIN"><button onclick="login()">Sign in</button></div>
+<div class=card><h3>Join with a code</h3><p class=m>Your school gives you a teacher code or a learner code.</p><input id=js placeholder="Code"><input id=jn placeholder="Full name"><select id=jg><option value=F>Girl / Female</option><option value=M>Boy / Male</option></select><input id=jc placeholder="Class, for example P5 (learners only)"><input id=jph placeholder="Parent phone for SMS, for example +2567... (learners)"><input id=jem placeholder="Parent email (learners, optional)"><input id=jp type=password placeholder="Choose a PIN"><button onclick="join()">Join</button></div>
+<div class=card><h3>Register a new school</h3><input id=ns placeholder="School name"><input id=tn placeholder="Your name (school administrator)"><input id=tp type=password placeholder="PIN"><button class=ghost onclick="regSchool()">Create school</button></div>
+<p class=m><a href="#" onclick="setup();return false">Database settings</a></p></main>`}
+const code=()=>Math.random().toString(36).slice(2,7).toUpperCase();
+async function start(u){await migrate();U=u;localStorage.setItem('u',JSON.stringify(u));const s=(await db('select * from m_schools where id=?',[u.sid]))[0];SS=s;SET={...DEF,...JSON.parse(s.settings||'{}')};shell()}
+const findSchool=async c=>(await db('select * from m_schools where tcode=? or lcode=?',[c.toUpperCase(),c.toUpperCase()]))[0];
+const login=safe(async()=>{const s=await findSchool(val('sc'));if(!s)throw new Error('School code not found');
+ const u=(await db('select * from m_users where school_id=? and lower(name)=lower(?) and pin=?',[s.id,val('nm'),await hash(val('pn'))]))[0];if(!u)throw new Error('Name or PIN is wrong');
+ await start({id:+u.id,sid:+s.id,name:u.name,role:u.role,cls:u.cls,sn:s.name})});
+const regSchool=safe(async()=>{if(!val('ns')||!val('tn')||!val('tp'))throw new Error('Fill every field');const t='T'+code(),l='L'+code();
+ const sid=await ins('insert into m_schools(name,tcode,lcode) values(?,?,?) returning id',[val('ns'),t,l]);
+ const id=await ins("insert into m_users(school_id,name,role,pin) values(?,?,'admin',?) returning id",[sid,val('tn'),await hash(val('tp'))]);
+ alert('Teacher code: '+t+'\nLearner code: '+l+'\nYou can see both again in Settings.');await start({id,sid,name:val('tn'),role:'admin',sn:val('ns')})});
+const join=safe(async()=>{const s=await findSchool(val('js'));if(!s)throw new Error('Code not found');const teacher=val('js').toUpperCase()===s.tcode;
+ if(!val('jn')||!val('jp'))throw new Error('Fill name and PIN');if(!teacher&&!val('jc'))throw new Error('Enter your class');
+ const cls=teacher?null:val('jc').toUpperCase();const id=await ins('insert into m_users(school_id,name,role,gender,cls,pin,phone,email) values(?,?,?,?,?,?,?,?) returning id',[s.id,val('jn'),teacher?'teacher':'learner',val('jg'),cls,await hash(val('jp')),val('jph'),val('jem')]);
+ await start({id,sid:+s.id,name:val('jn'),role:teacher?'teacher':'learner',cls,sn:s.name})});
+const out=()=>{localStorage.removeItem('u');U=null;auth()};
+
+/* ---------- shell ---------- */
+const TT=[['home','Home'],['cur','Curriculum'],['papers','Papers'],['lrn','Learners'],['rep','Reports'],['set','Settings']],LT=[['lp','My papers'],['perf','My performance']];
+function shell(){const t=U.role!=='learner';$('#app').innerHTML=`<header><b><img src=logo-96.png>${esc(U.sn)}</b> <small style="opacity:.7">v3</small><span>${esc(U.name)} · <a onclick="out()">Log out</a></span></header><nav>${(t?TT:LT).map(x=>`<button id=n-${x[0]} onclick="nav('${x[0]}')">${x[1]}</button>`).join('')}</nav><main id=v></main>`;nav(t?'home':'lp')}
+const views={home:()=>vHome(),cur:()=>vCur(),papers:()=>vPapers(),lrn:()=>vLrn(),rep:()=>vRep(),set:()=>vSet(),lp:()=>vLp(),perf:()=>vPerf()};
+function nav(v){V=v;$$('nav button').forEach(b=>b.classList.toggle('on',b.id==='n-'+v));safe(views[v])()}
+
+/* ---------- coverage (over-set reminders) ---------- */
+async function cov(){const a=[U.id,U.sid];
+ const [t,s]=await Promise.all([db('select t.*,(select count(*) from m_questions q join m_papers p on p.id=q.paper_id where q.topic_id=t.id and p.teacher_id=?) n from m_topics t where t.school_id=? order by cls,term,subject,name',a),
+ db('select s.*,(select count(*) from m_questions q join m_papers p on p.id=q.paper_id where q.sub_id=s.id and p.teacher_id=?) n from m_subtopics s where topic_id in(select id from m_topics where school_id=?)',a)]);return{t,s}}
+const flag=n=>n>=SET.overN?'red':n==0?'org':'grn';
+function tree(d,only){const by={};d.t.forEach(x=>(by[x.cls]??=[]).push(x));let h='';
+ for(const c in by){const ts=by[c].filter(x=>!only||x.n>=SET.overN||(x.n==0)||d.s.some(s=>s.topic_id==x.id&&s.n>=SET.overN));if(!ts.length)continue;const tot=by[c].reduce((a,x)=>a+ +x.n,0);
+  h+=`<div class=card><b>${esc(c)}</b> <span class=m>${tot} questions picked from this class</span>`+ts.map(x=>`<div style="margin:8px 0"><span class="${flag(+x.n)}"><b>${esc(x.name)}</b></span> <span class=m>${esc(x.subject)}, Term ${esc(x.term)} · set ${x.n}×${x.n>=SET.overN?' · OVER-SET':x.n==0?' · not set yet':''}</span>`+
+  d.s.filter(s=>s.topic_id==x.id&&(!only||s.n>=SET.overN||s.n==0)).map(s=>`<div class="m ${flag(+s.n)}" style="margin-left:14px">- ${esc(s.name)} (${s.n}×)${s.n>=SET.overN?' over-set':s.n==0?' ignored':''}</div>`).join('')+'</div>').join('')+'</div>'}
+ return h||'<p class=m>Nothing to report yet.</p>'}
+const vHome=async()=>{const d=await cov(),ov=d.t.filter(x=>x.n>=SET.overN).length,ig=d.t.filter(x=>x.n==0).length;
+ $('#v').innerHTML=`<div class=card><b>Reminders</b><p class=m>You are over-setting <b class=red>${ov}</b> topic(s) (${SET.overN} or more questions) and ignoring <b class=org>${ig}</b> topic(s) with no questions yet. Subtopics and the classes you pick from are listed below.</p><button onclick="nav('papers')">Set a paper</button></div>`+tree(d,true)};
+
+/* ---------- curriculum: find a topic, then add more later ---------- */
+async function vCur(){const t=await db('select t.*,(select count(*) from m_subtopics where topic_id=t.id) sc,(select count(*) from m_comps where topic_id=t.id) cc,(select count(*) from m_questions q join m_papers p on p.id=q.paper_id where q.topic_id=t.id and p.teacher_id=?) n from m_topics t where school_id=? order by cls,term,subject,name',[U.id,U.sid]);window.TP=t;
+ $('#v').innerHTML=`<div class=card><b>Find a topic</b><input id=cs placeholder="Search by topic, class or subject" oninput="curList()"></div>
+ <details class=card><summary><b>Add new topics (outline)</b></summary><p class=m>Choose class, term and subject. A plain line is a topic, a line starting with - is a subtopic, and a line starting with * is a competence under the subtopic above it. You can add more later.</p>
+ <input id=o1 list=dc placeholder="Class, for example P5"><div class=row><select id=o2><option>1</option><option>2</option><option>3</option></select><input id=o3 list=ds placeholder="Subject"></div>${dl('dc',t.map(x=>x.cls))}${dl('ds',t.map(x=>x.subject))}
+ <textarea id=o4 style="min-height:130px" placeholder="Types of computers&#10;- Laptop&#10;* Learner can compare computers&#10;- Desktop"></textarea><button onclick="saveOutline()">Save outline</button></details><div id=cl></div>`;curList()}
+const curList=()=>{const k=($('#cs').value||'').toLowerCase();$('#cl').innerHTML=TP.filter(x=>(x.name+' '+x.cls+' '+x.subject).toLowerCase().includes(k)).map(x=>`<div class="card" onclick="topicPage(${x.id})"><div class=row><b class="${flag(+x.n)}">${esc(x.name)}</b><span class=m>${esc(x.cls)} · T${esc(x.term)} · ${esc(x.subject)}</span></div><div class=m>${x.sc} subtopics · ${x.cc} competences · set ${x.n}×${x.n>=SET.overN?' (over-set)':''}</div></div>`).join('')||'<p class=m>No topic found. Add it above.</p>'};
+const lines=id=>$('#'+id).value.split('\n').map(x=>x.trim().replace(/^[-*]\s*/,'')).filter(Boolean);
+const topicPage=safe(async id=>{const t=(window.TP||[]).find(x=>x.id==id)||(await db('select * from m_topics where id=?',[id]))[0];
+ const [s,c]=await Promise.all([db('select s.*,(select count(*) from m_questions q join m_papers p on p.id=q.paper_id where q.sub_id=s.id and p.teacher_id=?) n from m_subtopics s where topic_id=? order by id',[U.id,id]),db('select * from m_comps where topic_id=? order by id',[id])]);
+ $('#v').innerHTML=`<button class="pri ghost" onclick="nav('cur')">Back to topics</button><br><br><div class=card><b>${esc(t.name)}</b><div class=m>${esc(t.cls)} · Term ${esc(t.term)} · ${esc(t.subject)}</div><p class=m>Add more subtopics, one per line:</p><textarea id=ns1></textarea><button onclick="addSubs(${id})">Add subtopics</button></div>`+
+ s.map(x=>`<div class=card><b>${esc(x.name)}</b> <span class="m ${flag(+x.n)}">set ${x.n}×</span>${c.filter(y=>y.sub_id==x.id).map(y=>`<div class=m>- ${esc(y.name)}</div>`).join('')}<textarea id=nc${x.id} placeholder="Add competences, one per line"></textarea><button class=ghost onclick="addComps(${x.id},${id})">Add competences</button></div>`).join('')+
+ (c.some(y=>!y.sub_id)?`<div class=card><b>Other competences</b>${c.filter(y=>!y.sub_id).map(y=>`<div class=m>- ${esc(y.name)}</div>`).join('')}</div>`:'')});
+const addSubs=safe(async tid=>{for(const n of lines('ns1'))if(!(await db('select id from m_subtopics where topic_id=? and lower(name)=lower(?)',[tid,n]))[0])await db('insert into m_subtopics(topic_id,name) values(?,?)',[tid,n]);topicPage(tid)});
+const addComps=safe(async(sid,tid)=>{for(const n of lines('nc'+sid))if(!(await db('select id from m_comps where sub_id=? and lower(name)=lower(?)',[sid,n]))[0])await db('insert into m_comps(topic_id,sub_id,name) values(?,?,?)',[tid,sid,n]);topicPage(tid)});
+const saveOutline=safe(async()=>{const cls=val('o1').toUpperCase(),term=val('o2'),sub=val('o3'),txt=$('#o4').value;if(!cls||!sub||!txt.trim())throw new Error('Enter class, subject and the outline');let t=null,sb=null;
+ for(const raw of txt.split('\n')){const l=raw.trim();if(!l)continue;const k=l[0],name=l.replace(/^[-*]\s*/,'');
+  if(k==='-'){if(!t)continue;const e=(await db('select id from m_subtopics where topic_id=? and lower(name)=lower(?)',[t,name]))[0];sb=e?+e.id:await ins('insert into m_subtopics(topic_id,name) values(?,?) returning id',[t,name])}
+  else if(k==='*'){if(!t)continue;if(!(await db('select id from m_comps where topic_id=? and sub_id is ? and lower(name)=lower(?)',[t,sb,name]))[0])await db('insert into m_comps(topic_id,sub_id,name) values(?,?,?)',[t,sb,name])}
+  else{const e=(await db('select id from m_topics where school_id=? and cls=? and term=? and lower(subject)=lower(?) and lower(name)=lower(?)',[U.sid,cls,term,sub,name]))[0];t=e?+e.id:await ins('insert into m_topics(school_id,cls,term,subject,name) values(?,?,?,?,?) returning id',[U.sid,cls,term,sub,name]);sb=null}}
+ nav('cur')});
+
+/* ---------- learners: search, contacts ---------- */
+const vLrn=safe(async()=>{window.LR=await db("select id,name,gender,cls,phone,email from m_users where school_id=? and role='learner' order by cls,name",[U.sid]);
+ $('#v').innerHTML=`<div class=card><input id=ls placeholder="Search learner by name or class" oninput="lrnList()"></div><div id=ll></div>`;lrnList()});
+const lrnList=()=>{const k=($('#ls').value||'').toLowerCase();$('#ll').innerHTML=LR.filter(x=>(x.name+' '+x.cls).toLowerCase().includes(k)).slice(0,80).map(x=>`<div class="card row" onclick="lrnPage(${x.id})"><span><b>${esc(x.name)}</b><br><span class=m>${esc(x.cls)} · ${x.gender==='M'?'Boy':'Girl'}</span></span><span class=m>${x.phone?'SMS ':''}${x.email?'Email':''}</span></div>`).join('')||'<p class=m>No learner found.</p>'};
+const lrnPage=safe(async id=>{const x=LR.find(y=>y.id==id),r=await db('select s.id sid,p.title,(select sum(score) from m_answers where sub_id=s.id) got,(select sum(q.marks) from m_answers a join m_questions q on q.id=a.qid where a.sub_id=s.id) mx from m_submissions s join m_papers p on p.id=s.paper_id where s.learner_id=? order by s.id desc',[id]);
+ $('#v').innerHTML=`<div class=card><b>${esc(x.name)}</b> <span class=m>${esc(x.cls)}</span><input id=lp1 placeholder="Parent phone for SMS" value="${esc(x.phone)}"><input id=lp2 placeholder="Parent email" value="${esc(x.email)}"><button onclick="savePh(${id})">Save contacts</button></div>`+
+ r.map(z=>`<div class="card row" onclick="showScript(${z.sid},'lrnPage(${id})')"><b>${esc(z.title)}</b><span>${pc([+z.got,+z.mx])}%</span></div>`).join('')+`<button class="pri ghost" onclick="nav('lrn')">Back</button>`});
+const savePh=safe(async id=>{await db('update m_users set phone=?,email=? where id=?',[val('lp1'),val('lp2'),id]);const x=LR.find(y=>y.id==id);x.phone=val('lp1');x.email=val('lp2');alert('Saved')});
+
+/* ---------- papers ---------- */
+let NT={},DL='';
+const fd=x=>x?String(x).replace('T',' '):'';
+const pHead=(p,who)=>`<div class=ph><h1>${esc(SS.name)}</h1><h2>${esc(p.subject)}</h2><h3>${esc(p.title)}</h3><div class=mt><span>Class: <b>${esc(p.cls)}</b></span><span>Term ${esc(p.term)}</span><span>Date: ${esc(p.pdate||'')}</span><span>Teacher: ${esc(p.tn||'')}</span></div>${who!==undefined?`<div class=mt><span>Name: <b>${who?esc(who):'______________________________'}</b></span><span>Total marks: <b>${p.max}</b></span></div>`:''}</div>`;
+const qHtml=(q,inp)=>q.map(x=>{const mm=x.marks*x.spaces;return `<div class="qq qa" data-q=${x.id}><b>${x.n}.</b> ${esc(x.text)} <span class=mkq>[${mm} mark${mm>1?'s':''}]</span>${Array.from({length:x.spaces},(_,i)=>`${x.spaces>1?`<div style="color:#444">(${String.fromCharCode(97+i)}) <i>${x.marks} mark${x.marks>1?'s':''}</i></div>`:''}${inp?'<textarea class=an></textarea>':'<div class=ln></div>'}`).join('')}</div>`}).join('');
+const INS='<p><i>Answer all questions. Write your answers in the spaces provided.</i></p>';
+const getP=async pid=>{const p=(await db('select p.*,u.name tn from m_papers p left join m_users u on u.id=p.teacher_id where p.id=?',[pid]))[0],q=await db('select * from m_questions where paper_id=? order by n',[pid]);p.max=q.reduce((a,x)=>a+x.marks*x.spaces,0);return[p,q]};
+const qView=safe(async pid=>{const [p,q]=await getP(pid);$('#v').innerHTML=`<div class=row><button class="pri np" onclick="pdf()">Download PDF</button><button class="pri ghost np" onclick="print()">Print</button></div><br><div class="paper sheet" data-f="${esc(p.title)} question paper">${pHead(p,'')}${INS}${qHtml(q,false)}</div><button class="pri ghost np" onclick="nav('papers')">Back</button>`});
+const vPapers=async()=>{const r=await db('select p.*,(select count(*) from m_submissions where paper_id=p.id) s from m_papers p where school_id=? order by id desc',[U.sid]);
+ $('#v').innerHTML=`<button class=pri onclick="newPaper()">Set a new paper</button><br><br>`+(r.map(p=>`<div class=card><div class=row><b>${esc(p.title)}</b><span class=tag>${p.status}</span></div><div class=m>${esc(p.cls)} · ${esc(p.subject)} · Term ${esc(p.term)} · ${p.s} submitted<br>${p.deadline?'Deadline: '+fd(p.deadline):'No deadline'}</div>
+ <div class=row style="margin-top:8px"><button class=ghost onclick="qView(${p.id})">Question paper</button><button class=ghost onclick="markHome(${p.id})">Mark</button><button class=ghost onclick="sheet(${p.id})">Marksheet</button></div><div class=row style="margin-top:6px"><button class=ghost onclick="bulk(${p.id})">All scripts</button><button class=ghost onclick="notify(${p.id})">Notify learners</button><button class=ghost onclick="rel(${p.id},'${p.status==='released'?'open':'released'}')">${p.status==='released'?'Hide results':'Release results'}</button></div></div>`).join('')||'<p class=m>No papers yet.</p>')};
+const rel=safe(async(id,s)=>{await db('update m_papers set status=? where id=?',[s,id]);vPapers()});
+const newPaper=safe(async()=>{const t=await db('select distinct subject from m_topics where school_id=?',[U.sid]);if(!t.length)throw new Error('Add topics in Curriculum first');
+ $('#v').innerHTML=`<div class=card><h3>New paper</h3><input id=pt placeholder="Paper title, for example End of Term 2 Test"><input id=pcl placeholder="Class that will sit it, for example P5"><div class=row><select id=pm><option>1</option><option>2</option><option>3</option></select><input id=ps list=dsu placeholder="Subject"></div>${dl('dsu',t.map(x=>x.subject))}
+ <label class=m>Date of paper<input id=pdt type=date value="${new Date().toISOString().slice(0,10)}"></label><label class=m>Deadline for learners (optional). Leave empty to accept work at any time.<input id=pdl type=datetime-local></label>
+ <p class=m>How many questions at each Bloom level?</p>${L.map((l,i)=>`<label class=row>${l}<input type=number min=0 value=0 id=n${i} style="max-width:90px"></label>`).join('')}<button onclick="buildQ()">Next</button></div>`});
+const buildQ=safe(async()=>{const m={t:val('pt'),c:val('pcl').toUpperCase(),term:val('pm'),s:val('ps'),d:val('pdt'),dl:val('pdl')};if(!m.t||!m.c||!m.s)throw new Error('Enter title, class and subject');
+ const n=L.map((_,i)=>+val('n'+i)||0);if(!n.some(x=>x))throw new Error('Enter how many questions you want');
+ const [tp,st,cp]=await Promise.all([db('select t.*,(select count(*) from m_questions q join m_papers p on p.id=q.paper_id where q.topic_id=t.id and p.teacher_id=?) n from m_topics t where school_id=? and lower(subject)=lower(?)',[U.id,U.sid,m.s]),
+ db('select * from m_subtopics where topic_id in(select id from m_topics where school_id=?)',[U.sid]),db('select * from m_comps where topic_id in(select id from m_topics where school_id=?)',[U.sid])]);
+ if(!tp.length)throw new Error('No topics for this subject');C={m,tp,st,cp,cls:new Set([m.c]),term:new Set([m.term])};
+ const cl=[...new Set(tp.map(x=>x.cls))];let k=0;
+ $('#v').innerHTML=`<div class=card><b>Pick questions from</b><p class=m>Tick the classes and terms your topics come from.</p><div class=chips>${cl.map(c=>`<label><input type=checkbox ${c===m.c?'checked':''} onchange="flt('cls','${esc(c)}',this.checked)"> ${esc(c)}</label>`).join('')}</div><div class=chips>${['1','2','3'].map(x=>`<label><input type=checkbox ${x===m.term?'checked':''} onchange="flt('term','${x}',this.checked)"> Term ${x}</label>`).join('')}</div></div>`+
+ n.map((c,i)=>Array.from({length:c},()=>{k++;return `<div class="card qc" data-b="${L[i]}"><b>Question ${k}</b> <span class=m>${L[i]}</span><select class=qtp onchange="fillSub(this)"></select><div class="wr m"></div><select class=qst onchange="fillComp(this.closest('.qc'))"></select><select class=qcp></select>
+ <textarea class=qt placeholder="Write the question"></textarea><div class=row><label class=m>Answer spaces<input class=qs type=number min=1 value=1 oninput="tt(this)"></label><label class=m>Marks for each answer<input class=qm type=number min=1 value=1 oninput="tt(this)"></label></div><div class="m tl">Total: 1 mark for 1 answer space</div><textarea class=qg placeholder="Marking guide (optional)"></textarea></div>`}).join('')).join('')+`<button class=pri onclick="savePaper()">Save paper</button>`;
+ topics()});
+function flt(k,v,on){C[k][on?'add':'delete'](v);topics()}
+function topics(){const o=C.tp.filter(x=>C.cls.has(x.cls)&&C.term.has(x.term)).map(x=>`<option value="${x.id}">${esc(x.cls)} T${x.term} · ${esc(x.name)} (set ${x.n}×)${x.n>=SET.overN?' - OVER-SET':''}</option>`).join('')||'<option value="">No topics for this choice</option>';$$('.qtp').forEach(e=>{e.innerHTML=o;fillSub(e)})}
+function fillSub(e){const c=e.closest('.qc'),t=e.value;c.querySelector('.qst').innerHTML='<option value="">Subtopic (optional)</option>'+opts(C.st.filter(x=>x.topic_id==t));fillComp(c);
+ const tp=C.tp.find(x=>x.id==t);c.querySelector('.wr').innerHTML=tp&&tp.n>=SET.overN?`<span class=red>You have already set ${tp.n} questions on this topic. Consider another topic.</span>`:''}
+function fillComp(c){const t=c.querySelector('.qtp').value,s=c.querySelector('.qst').value;c.querySelector('.qcp').innerHTML='<option value="">Competence (optional)</option>'+opts(C.cp.filter(x=>s?x.sub_id==s:x.topic_id==t))}
+function tt(e){const c=e.closest('.qc'),s=+c.querySelector('.qs').value||1,m=+c.querySelector('.qm').value||1;c.querySelector('.tl').textContent=`Total: ${s*m} mark(s) for ${s} answer space(s)`}
+const savePaper=safe(async()=>{const cs=$$('.qc');if(cs.some(c=>!c.querySelector('.qt').value.trim()||!c.querySelector('.qtp').value))throw new Error('Choose a topic and write every question');
+ const p=await ins("insert into m_papers(school_id,teacher_id,title,cls,term,subject,status,pdate,deadline) values(?,?,?,?,?,?,'open',?,?) returning id",[U.sid,U.id,C.m.t,C.m.c,C.m.term,C.m.s,C.m.d,C.m.dl||null]);
+ for(const [i,c] of cs.entries()){const g=k=>c.querySelector(k).value;await db('insert into m_questions(paper_id,n,text,marks,spaces,bloom,topic_id,sub_id,comp_id,guide) values(?,?,?,?,?,?,?,?,?,?)',[p,i+1,g('.qt'),+g('.qm')||1,Math.max(1,+g('.qs')||1),c.dataset.b,g('.qtp'),g('.qst')||null,g('.qcp')||null,g('.qg')])}
+ notify(p)});
+const notify=safe(async pid=>{const [p]=await getP(pid),r=await db("select name,phone,email from m_users where school_id=? and role='learner' and lower(cls)=lower(?)",[U.sid,p.cls]);
+ const ph=r.map(x=>(x.phone||'').replace(/\s/g,'')).filter(Boolean),em=r.map(x=>x.email).filter(Boolean);NT={ph,em,p};
+ const msg=`${SS.name}: New ${p.subject} paper "${p.title}" for ${p.cls} from ${p.tn}. ${p.deadline?'Deadline: '+fd(p.deadline)+'.':'No deadline.'} Total marks: ${p.max}. Open: ${location.href.split('?')[0].split('#')[0]}`;
+ $('#v').innerHTML=`<div class=card><b>Tell learners about this paper</b><p class=m>${r.length} learner(s) in ${esc(p.cls)} · ${ph.length} with a phone number · ${em.length} with an email.</p><textarea id=nm2 style="min-height:120px">${esc(msg)}</textarea><button onclick="sendSms()">Open SMS app with all numbers</button><button onclick="sendMail()">Open email with all addresses</button>${SET.hook?'<button onclick="sendHook()">Send automatically</button>':''}<button class=ghost onclick="nav('papers')">Done</button></div>`});
+const sendSms=()=>{if(!NT.ph.length)return alert('No phone numbers yet. Add them under Learners.');location.href='sms:'+NT.ph.join(',')+'?body='+encodeURIComponent($('#nm2').value)};
+const sendMail=()=>{if(!NT.em.length)return alert('No email addresses yet. Add them under Learners.');location.href='mailto:?bcc='+encodeURIComponent(NT.em.join(','))+'&subject='+encodeURIComponent('New paper: '+NT.p.title)+'&body='+encodeURIComponent($('#nm2').value)};
+const sendHook=safe(async()=>{await fetch(SET.hook,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({school:SS.name,subject:'New paper: '+NT.p.title,phones:NT.ph,emails:NT.em,message:$('#nm2').value})});alert('Sent to your notification service')});
+
+/* ---------- marking: one question at a time, identical answers marked once ---------- */
+const markHome=safe(async pid=>{PID=pid;QS=await db('select q.id,q.n,q.text,q.bloom,(select count(*) from m_answers a where a.qid=q.id) c,(select count(score) from m_answers a where a.qid=q.id) mk from m_questions q where paper_id=? order by n',[pid]);
+ $('#v').innerHTML=`<button class="pri ghost" onclick="nav('papers')">Back to papers</button><br><br>`+QS.map((q,i)=>`<div class="card row" onclick="markQ(${i})"><span><b>Q${q.n}</b> <span class=m>${q.bloom}</span><br>${esc(q.text.slice(0,70))}</span><span class="tag ${q.c&&q.mk>=q.c?'grn':q.c?'org':''}">${q.c?q.mk+'/'+q.c+' marked':'no answers'}</span></div>`).join('')});
+const markQ=safe(async i=>{QI=i;const q=(await db('select * from m_questions where id=?',[QS[i].id]))[0];
+ G=await db('select a.norm n,min(a.answer) ans,count(*) c,count(a.score) mk,min(a.score) sc,max(a.comment) cm,group_concat(u.name,\', \') names from m_answers a join m_submissions s on s.id=a.sub_id join m_users u on u.id=s.learner_id where a.qid=? group by a.norm order by (count(a.score)<count(*)) desc,c desc',[q.id]);
+ const un=G.filter(g=>+g.mk<+g.c).length,mx=q.marks,v=[...Array(Math.min(mx,10)+1).keys()];
+ $('#v').innerHTML=`<div class=card><b>Q${q.n}</b> <span class=m>${q.bloom} · ${mx} mark(s) per answer · ${q.spaces} space(s)</span><p>${esc(q.text)}</p>${q.guide?`<div class="m">Guide: ${esc(q.guide)}</div>`:''}<p class=m>${un?un+' different answer(s) left to mark. Tap an answer to see who wrote it and add a comment.':'All marked.'}</p></div>`+
+ G.map((g,k)=>`<div class=card><div class=row onclick="$('#d${k}').hidden=!$('#d${k}').hidden"><b style="flex:3">${esc(g.ans)||'(no answer)'}</b><span class="tag ${+g.mk<+g.c?'org':'grn'}">${g.c} learner(s)</span></div>
+ <div class=sc>${v.map(x=>`<button class="${+g.mk>=+g.c&&+g.sc===x?'on':''}" onclick="setMark(${k},${x})">${x}</button>`).join('')}</div>
+ <div id=d${k} ${+g.mk<+g.c&&g.n?'hidden':''}><div class=m>Written by: ${esc(g.names)}</div><input id=c${k} placeholder="Comment for this answer (shown in the script)" value="${esc(g.cm)}"></div></div>`).join('')+
+ `<div class=row><button class="pri ghost" onclick="markQ(${Math.max(0,i-1)})">Previous</button><button class=pri onclick="${i+1<QS.length?`markQ(${i+1})`:`markHome(${PID})`}">${i+1<QS.length?'Next question':'Finish'}</button></div>`});
+const setMark=safe(async(k,x)=>{const g=G[k],qid=QS[QI].id,cm=$('#c'+k).value.trim();await db('update m_answers set score=?,comment=? where qid=? and norm=?',[x,cm||null,qid,g.n]);
+ const left=(await db('select count(*) n from m_answers where qid=? and score is null',[qid]))[0].n;
+ if(+left===0&&QI+1<QS.length)markQ(QI+1);else if(+left===0){alert('All questions marked');markHome(PID)}else markQ(QI)});
+
+/* ---------- scripts, marksheet, bulk ---------- */
+async function script(sid){const h=(await db('select s.paper_id,u.name lname,p.title,p.subject,p.cls,p.term,p.pdate,t.name tn from m_submissions s join m_users u on u.id=s.learner_id join m_papers p on p.id=s.paper_id left join m_users t on t.id=p.teacher_id where s.id=?',[sid]))[0];
+ const q=await db('select * from m_questions where paper_id=? order by n',[h.paper_id]),a=await db('select * from m_answers where sub_id=? order by qid,idx',[sid]);let tot=0,max=0;
+ const body=q.map(x=>{const r=a.filter(y=>y.qid==x.id),got=r.reduce((s,y)=>s+(+y.score||0),0),mm=x.marks*x.spaces;tot+=got;max+=mm;
+  return `<div class=qq><b>${x.n}.</b> ${esc(x.text)} <span class=mkq>[${mm}]</span>${r.map((y,i)=>`<div class=ln>${r.length>1?'<span style="color:#555">('+String.fromCharCode(97+i)+')</span> ':''}${esc(y.answer)||'<i>No answer</i>'}<span class=mk>${+y.score>=x.marks?'✓':+y.score>0?'~':'✗'} ${+y.score||0}/${x.marks}</span></div>${y.comment?`<div class=cmx>${esc(y.comment)}</div>`:''}`).join('')}${x.guide?`<div class=gd>Expected answer: ${esc(x.guide)}</div>`:''}<div class=tot>${got}/${mm}</div></div>`}).join('');
+ const p=pc([tot,max]),b=band(p);return `<div class="sheet paper" data-f="${esc(h.lname+' - '+h.title)}"><div class=score>${tot}/${max}</div>${pHead({...h,max},h.lname)}<p><b>${p}% · ${esc(b.name)}</b> ${esc(b.c)}</p>${body}</div>`}
+const pdf=safe(async()=>{const els=$$('.sheet');if(!els.length)return;
+ if(!window.html2pdf)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=ok;s.onerror=()=>no(new Error('Could not load the PDF tool. Check your internet, or use Print and choose Save as PDF.'));document.head.appendChild(s)});
+ const box=document.createElement('div');els.forEach(e=>box.appendChild(e.cloneNode(true)));
+ await html2pdf().set({margin:8,filename:els.length>1?'MELAN scripts.pdf':(els[0].dataset.f||'MELAN')+'.pdf',image:{type:'jpeg',quality:.92},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4'},pagebreak:{mode:['css','legacy'],after:'.sheet'}}).from(box).save()});
+const dlBtns=`<div class=row><button class="pri np" onclick="pdf()">Download PDF</button><button class="pri ghost np" onclick="print()">Print</button></div><br>`;
+const showScript=safe(async(sid,back)=>{$('#v').innerHTML=dlBtns+await script(sid)+`<button class="pri ghost np" onclick="${back}">Back</button>`});
+const bulk=safe(async pid=>{const r=await db('select s.id from m_submissions s join m_users u on u.id=s.learner_id where paper_id=? order by u.name',[pid]);let h='';for(const x of r)h+=await script(x.id);
+ $('#v').innerHTML=dlBtns+(r.length>1?'<p class="m np">One PDF with '+r.length+' scripts. It may take a minute.</p>':'')+h+`<button class="pri ghost np" onclick="nav('papers')">Back</button>`});
+const sheet=safe(async pid=>{const [p]=await db('select * from m_papers where id=?',[pid]);const q=await db('select * from m_questions where paper_id=? order by n',[pid]);
+ const r=await db('select s.id sid,u.name,u.gender,a.qid,sum(a.score) sc from m_submissions s join m_users u on u.id=s.learner_id join m_answers a on a.sub_id=s.id where s.paper_id=? group by s.id,a.qid',[pid]);
+ const L2={};r.forEach(x=>{(L2[x.sid]??={n:x.name,g:x.gender,q:{}}).q[x.qid]=+x.sc||0});const max=q.reduce((a,x)=>a+x.marks*x.spaces,0);
+ const rows=Object.entries(L2).map(([id,l])=>{const t=Object.values(l.q).reduce((a,b)=>a+b,0);return{id,...l,t,p:pc([t,max])}}).sort((a,b)=>b.p-a.p);
+ $('#v').innerHTML=`<button class="pri np" onclick="print()">Print marksheet</button><br><br><div class="card wrap"><b>${esc(p.title)}</b> <span class=m>${esc(p.cls)} · ${esc(p.subject)}</span><table><tr><th>Name</th><th>Sex</th>${q.map(x=>`<th>Q${x.n}</th>`).join('')}<th>Total/${max}</th><th>%</th><th>Band</th></tr>`+
+ rows.map(l=>`<tr onclick="showScript(${l.id},'sheet(${pid})')"><td>${esc(l.n)}</td><td>${esc(l.g)}</td>${q.map(x=>`<td>${l.q[x.id]??'-'}</td>`).join('')}<td>${l.t}</td><td>${l.p}</td><td>${esc(band(l.p).name)}</td></tr>`).join('')+`</table></div><button class="pri ghost np" onclick="nav('papers')">Back</button>`});
+
+/* ---------- reports ---------- */
+const vRep=safe(async()=>{const [ps,cl]=await Promise.all([db('select id,title from m_papers where school_id=? order by id desc',[U.sid]),db("select distinct cls from m_users where school_id=? and role='learner'",[U.sid])]);
+ $('#v').innerHTML=`<div class=card><select id=rp onchange=rep()><option value="">All papers</option>${opts(ps,'title')}</select><div class=row><select id=rc onchange=rep()><option value="">All classes</option>${cl.map(x=>`<option>${esc(x.cls)}</option>`).join('')}</select><select id=rg onchange=rep()><option value="">Both genders</option><option value=M>Boys</option><option value=F>Girls</option></select></div></div><div id=rb></div>`;rep()});
+const rep=safe(async()=>{const p=val('rp'),c=val('rc'),g=val('rg'),ar=[U.sid];let sql='select a.score,q.id qid,q.n,q.bloom,q.marks,q.paper_id pid,u.id uid,u.name,u.gender,u.cls from m_answers a join m_questions q on q.id=a.qid join m_submissions s on s.id=a.sub_id join m_users u on u.id=s.learner_id join m_papers p on p.id=q.paper_id where p.school_id=? and a.score is not null';
+ if(p){sql+=' and p.id=?';ar.push(p)}if(c){sql+=' and u.cls=?';ar.push(c)}if(g){sql+=' and u.gender=?';ar.push(g)}
+ const r=await db(sql,ar),ad=(o,k,x)=>{const t=o[k]??=[0,0];t[0]+=+x.score;t[1]+=+x.marks},lr={},nm={},bl={},gn={},gb={},qs={},qi={};
+ r.forEach(x=>{const gg=x.gender||'?';ad(lr,x.uid,x);nm[x.uid]=x.name;ad(bl,x.bloom,x);ad(gn,gg,x);ad(gb[gg]??={},x.bloom,x);ad(qs,x.qid,x);qi[x.qid]=x});
+ const ls=Object.entries(lr).map(([k,l])=>({n:nm[k],p:pc(l)})).sort((a,b)=>a.p-b.p),bd={};ls.forEach(l=>{const b=band(l.p);bd[b.name]=(bd[b.name]||0)+1});
+ $('#rb').innerHTML=!r.length?'<p class=m>No marked work yet.</p>':`<div class=card><b>Notification link (optional)</b><p class=m>If you have an SMS or email service, paste its web address here. The app sends it the message, phone numbers and emails.</p><input id=s3 value="${esc(SET.hook||'')}" ${a?'':'disabled'}><b>Performance bands</b>${SET.bands.map(b=>`<div class=row><span>${esc(b.name)} <span class=m>${b.min}%+</span></span><b>${bd[b.name]||0} learner(s)</b></div><div class=m>${esc(b.c)}</div>`).join('')}</div>
+ <div class=card><b>Cognitive level (Bloom)</b>${bars(bl)}</div>
+ <div class=card><b>By gender</b>${Object.keys(gn).map(k=>`<div style="margin:8px 0"><b>${k==='M'?'Boys':k==='F'?'Girls':'Not stated'}: ${pc(gn[k])}%</b>${bars(gb[k])}</div>`).join('')}</div>
+ <div class=card><b>Questions, hardest first</b>${Object.entries(qs).sort((a,b)=>pc(a[1])-pc(b[1])).slice(0,12).map(([id,t])=>`<div class=bar style="grid-template-columns:1fr 42px 42px"><span>Q${qi[id].n} <span class=m>${qi[id].bloom}</span></span><span></span><em>${pc(t)}%</em></div>`).join('')}</div>
+ <div class=card><b>Learners, lowest first</b>${ls.slice(0,40).map(l=>`<div class=row><span>${esc(l.n)}</span><span>${l.p}% · ${esc(band(l.p).name)}</span></div>`).join('')}</div>`});
+
+/* ---------- settings ---------- */
+const vSet=()=>{const a=U.role==='admin',bt=SET.bands.map(b=>[b.min,b.name,b.c].join('|')).join('\n');
+ $('#v').innerHTML=`<div class=card><b>${esc(SS.name)}</b>${a?`<p class=m>Teacher code: <b>${esc(SS.tcode)}</b><br>Learner code: <b>${esc(SS.lcode)}</b><br>Give each group its own code. Anyone who joins with it is registered.</p>`:''}</div>
+ <div class=card><b>Over-set reminder</b><p class=m>Warn me when a topic or subtopic has this many questions or more.</p><input id=s1 type=number min=2 value=${SET.overN} ${a?'':'disabled'}>
+ <b>Performance bands</b><p class=m>One per line: minimum percent | name | comment</p><textarea id=s2 style="min-height:110px" ${a?'':'disabled'}>${esc(bt)}</textarea>${a?'<button onclick="saveSet()">Save settings</button>':'<p class=m>Only the administrator can change settings.</p>'}</div>
+ <button class="pri ghost" onclick="setup()">Database connection</button>`};
+const saveSet=safe(async()=>{const bands=$('#s2').value.split('\n').map(l=>l.split('|')).filter(x=>x.length>=2).map(x=>({min:+x[0]||0,name:x[1].trim(),c:(x[2]||'').trim()})).sort((a,b)=>b.min-a.min);if(!bands.length)throw new Error('Add at least one band');
+ SET={overN:+val('s1')||6,bands,hook:val('s3')};await db('update m_schools set settings=? where id=?',[JSON.stringify(SET),U.sid]);alert('Saved')});
+
+/* ---------- learner ---------- */
+const vLp=async()=>{const r=await db('select p.id,p.title,p.subject,p.status,p.deadline,s.id sid from m_papers p left join m_submissions s on s.paper_id=p.id and s.learner_id=? where p.school_id=? and lower(p.cls)=lower(?) order by p.id desc',[U.id,U.sid,U.cls||'']);
+ $('#v').innerHTML=r.map(p=>{const late=p.deadline&&new Date(p.deadline)<new Date(),st=!p.sid?(late?'closed':'to do'):p.status==='released'?'view marked script':'awaiting marks';return `<div class="card row" onclick="lOpen(${p.id},${p.sid||0},'${p.status}','${esc(p.deadline||'')}')"><span><b>${esc(p.title)}</b><br><span class=m>${esc(p.subject)}${p.deadline?' · due '+fd(p.deadline):''}</span></span><span class=tag>${st}</span></div>`}).join('')||'<p class=m>No papers for your class yet.</p>'};
+const lOpen=safe(async(pid,sid,st,dl)=>{if(sid&&st==='released')return showScript(sid,"nav('lp')");if(sid)return alert('Your teacher has not released the marks yet');if(dl&&new Date(dl)<new Date())return alert('The deadline for this paper has passed');
+ const [p,q]=await getP(pid);PID=pid;DL=dl;$('#v').innerHTML=`<div class=paper>${pHead(p,U.name)}${INS}${qHtml(q,true)}</div><button class=pri onclick="submitP()">Submit paper</button>`});
+const submitP=safe(async()=>{if(DL&&new Date(DL)<new Date())throw new Error('The deadline has passed');if(!confirm('Submit your answers? You cannot change them after.'))return;const s=await ins('insert into m_submissions(paper_id,learner_id) values(?,?) returning id',[PID,U.id]);
+ for(const c of $$('.qa'))for(const [i,t] of [...c.querySelectorAll('.an')].entries()){const n=norm(t.value);await db('insert into m_answers(sub_id,qid,idx,answer,norm,score) values(?,?,?,?,?,?)',[s,c.dataset.q,i,t.value.trim(),n,n?null:0])}
+ nav('lp')});
+const vPerf=async()=>{const r=await db("select a.score,q.id qid,q.n,q.text,q.bloom,q.marks,q.guide,p.title from m_answers a join m_submissions s on s.id=a.sub_id join m_questions q on q.id=a.qid join m_papers p on p.id=q.paper_id where s.learner_id=? and p.status='released' and a.score is not null",[U.id]);
+ if(!r.length)return $('#v').innerHTML='<p class=m>Your analysis appears after your teacher releases a marked paper.</p>';
+ const ad=(o,k,x)=>{const t=o[k]??=[0,0];t[0]+=+x.score;t[1]+=+x.marks},tot=[0,0],bl={},pp={},qq={};r.forEach(x=>{tot[0]+=+x.score;tot[1]+=+x.marks;ad(bl,x.bloom,x);ad(pp,x.title,x);ad(qq,x.qid,x)});
+ const p=pc(tot),b=band(p),qi={};r.forEach(x=>qi[x.qid]=x);const weak=Object.entries(qq).filter(([,t])=>pc(t)<50).sort((a,b)=>pc(a[1])-pc(b[1])).slice(0,8);
+ const lv=L.filter(l=>bl[l]).sort((a,b)=>pc(bl[b])-pc(bl[a]));
+ $('#v').innerHTML=`<div class=card><b>Overall: ${p}% · ${esc(b.name)}</b><p>${esc(b.c)}</p></div><div class=card><b>By cognitive level</b>${bars(bl)}${lv.length>1?`<p class=m>Strongest: ${lv[0]}. Needs work: ${lv[lv.length-1]}.</p>`:''}</div>
+ <div class=card><b>By paper</b>${Object.entries(pp).map(([k,t])=>`<div class=row><span>${esc(k)}</span><b>${pc(t)}%</b></div>`).join('')}</div>
+ <div class=card><b>Questions you missed most</b>${weak.map(([id,t])=>`<div style="margin:8px 0"><span class=red><b>Q${qi[id].n}</b> ${pc(t)}%</span> <span class=m>${qi[id].bloom}</span><br>${esc(qi[id].text)}${qi[id].guide?`<div class=gd style="background:var(--bg)">Expected answer: ${esc(qi[id].guide)}</div>`:''}</div>`).join('')||'<span class=m>None below 50%. Well done.</span>'}</div>`};
+
+!cfg()?setup():U?start(U).catch(()=>auth()):auth();
+</script></body></html>
