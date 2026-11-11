@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4c1d95">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<title>MELAN</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MELAN">
+<style>
+:root{--bg:#f8f5ff;--c:#fff;--t:#1f1535;--m:#6e6585;--p:#5b21b6;--pt:#fff;--a:#ea580c;--b:#e2d9f3;--r:#b42318;--o:#b45309;--g:#15803d}
+@media(prefers-color-scheme:dark){:root{--bg:#150f24;--c:#201836;--t:#efe9fb;--m:#a79dc2;--p:#a78bfa;--pt:#190d33;--a:#fb923c;--b:#35294f;--r:#f87171;--o:#fbbf24;--g:#4ade80}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.45 system-ui,sans-serif;background:var(--bg);color:var(--t);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+input,select,textarea,button{font:inherit;color:inherit}a{color:var(--a);cursor:pointer;text-decoration:underline}
+.top{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#4c1d95;color:#fff;position:sticky;top:0;z-index:10}.top button{background:none;border:0;color:#fff;font-size:24px;padding:0 6px}
+aside{position:fixed;left:0;top:0;bottom:0;width:250px;background:linear-gradient(180deg,#3b1480,#6d28d9);color:#fff;transform:translateX(-100%);transition:.2s;z-index:30;padding:14px;overflow:auto;display:flex;flex-direction:column}aside.open{transform:none}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:14px}.brand img{width:44px;height:44px;border-radius:12px}.brand small{display:block;opacity:.8}
+.ni{display:block;padding:11px 12px;border-radius:12px;color:#fff;margin:3px 0;cursor:pointer}.ni.on{background:#f97316;font-weight:700}
+.who{margin-top:auto;padding-top:14px;border-top:1px solid #fff4;font-size:14px}.who a{color:#fed7aa;display:block;margin-top:4px}
+#ov{display:none;position:fixed;inset:0;background:#0008;z-index:20}#ov.on{display:block}
+@media(min-width:900px){aside{transform:none}.top{display:none}main{margin-left:250px!important}#ov{display:none!important}}
+main{max-width:860px;margin:0 auto;padding:12px}.lg{max-width:460px;margin:0 auto;padding:14px}
+.card{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:12px;margin:0 0 10px}
+.card input,.card select,.card textarea{width:100%;margin:4px 0;padding:9px;border:1px solid var(--b);border-radius:10px;background:var(--bg)}.card input[type=checkbox]{width:auto}
+textarea{min-height:64px}
+.pri,.card>button,.card details>button{background:linear-gradient(90deg,#ea580c,#f97316);color:#fff;font-weight:700;border:0;border-radius:10px;padding:10px 14px;margin-top:6px;width:100%}
+.ghost{background:none!important;color:var(--t)!important;border:1px solid var(--b)!important;font-weight:400!important}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+.m{color:var(--m);font-size:14px}.tag{font-size:12px;border:1px solid var(--b);border-radius:12px;padding:2px 9px;flex:0 0 auto}
+.red{color:var(--r)}.org{color:var(--o)}.grn{color:var(--g)}
+.hero{text-align:center;padding:10px 0}.hero img{width:88px;height:88px;border-radius:22px}.hero h2{margin:6px 0 0;color:var(--p)}.hero p{margin:2px 0;color:var(--m)}
+.tabs{display:flex;gap:6px;margin-bottom:8px}.tabs button{flex:1;padding:9px;border:1px solid var(--b);background:var(--c);border-radius:12px}.tabs button.on{background:var(--p);color:var(--pt);border-color:var(--p);font-weight:700}
+.sc{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.sc button{min-width:44px;height:44px;border:1px solid var(--b);background:var(--bg);border-radius:10px}.sc button.on{background:var(--a);color:#fff;border-color:var(--a)}
+.bar{display:grid;grid-template-columns:100px 1fr 42px;gap:8px;align-items:center;font-size:14px;margin:5px 0}.bar div{height:10px;background:var(--bg);border-radius:5px;overflow:hidden}.bar i{display:block;height:100%}.bar em{font-style:normal;text-align:right}
+.g{background:var(--g)}.o{background:var(--o)}.r{background:var(--r)}
+.chips label{display:inline-block;border:1px solid var(--b);border-radius:16px;padding:4px 12px;margin:3px 4px 3px 0;cursor:pointer}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid #bbb;padding:4px 6px;text-align:center}td:first-child,th:first-child{text-align:left}.wrap{overflow-x:auto}
+.pt{border:1px dashed var(--b);border-radius:10px;padding:8px;margin:8px 0}#qs{counter-reset:q}.qn::before{counter-increment:q;content:"Question " counter(q)}
+.paper{background:#fff;color:#111;font-family:"Times New Roman",Times,serif;border:1px solid var(--b);padding:18px;border-radius:8px;margin-bottom:12px;position:relative}
+.ph{text-align:center;border-bottom:2px solid #111;padding-bottom:8px;margin-bottom:10px}.ph h1{margin:0;font-size:22px;letter-spacing:1px;text-transform:uppercase}.ph h2{margin:4px 0 0;font-size:18px;text-transform:uppercase}.ph h3{margin:2px 0;font-size:16px}
+.ph .mt{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:14px;gap:4px 14px;margin-top:6px}.sheet .ph{padding:0 92px 8px}.sec{margin:16px 0 4px;border-bottom:1px solid #111;font-size:15px}
+.qq{margin:12px 0}.pl2{margin:8px 0 2px}.mkq{float:right;font-weight:700}
+.ln{background:repeating-linear-gradient(transparent 0,transparent 27px,#8a94a6 28px);line-height:28px;min-height:56px;padding:0 6px;white-space:pre-wrap;border:1px solid #777;border-radius:3px;position:relative;margin:4px 0;font-family:"Segoe Print","Bradley Hand","Noteworthy","Comic Sans MS",cursive;color:#1a3a9c}
+.paper textarea.an{width:100%;display:block;margin:4px 0;font-family:inherit;font-size:16px;color:#111;border:1px solid #777;border-radius:3px;background:repeating-linear-gradient(transparent 0,transparent 27px,#8a94a6 28px);line-height:28px;min-height:84px;padding:0 6px}
+.mk{position:absolute;right:6px;bottom:0;color:#c00;font-weight:700;font-size:14px;font-family:Arial,sans-serif}
+.opt{display:block;padding:4px 0}.opt input{margin-right:8px}
+.gi{display:inline-block;width:130px;border:0;border-bottom:2px solid #222;background:transparent;margin:0 4px;padding:2px;font-size:16px;color:#1a3a9c}.bl{display:inline-block;width:110px;border-bottom:2px solid #222}.gp{line-height:2}
+.mrow{margin:6px 0}.slot{display:inline-block;min-width:130px;min-height:32px;border-bottom:2px solid #222;margin-right:8px;text-align:center;vertical-align:middle;padding:2px 6px;background:#f3f0ff;border-radius:4px;color:#1a3a9c}
+.pool{border:1px dashed #888;border-radius:8px;padding:6px;margin-top:8px}.chip{display:inline-block;border:1px solid #5b21b6;border-radius:16px;padding:4px 12px;margin:4px;background:#fff;cursor:grab;user-select:none}.chip.sel{background:#f97316;color:#fff}.chip.used{opacity:.25;pointer-events:none}
+.score{position:absolute;top:12px;right:12px;border:2px solid #b42318;color:#b42318;padding:4px 12px;font-weight:700;border-radius:8px;font-size:20px}
+.cmx{font-family:"Comic Sans MS","Comic Neue","Chalkboard SE",cursive;background:#fff6c7;border:2px solid #e0a800;border-radius:12px;padding:3px 10px;margin:3px 0 6px 20px;color:#b3123f;font-size:15px;display:inline-block}
+.gd{background:#eaf3ff;border-radius:6px;padding:5px 9px;font-size:14px;margin-top:4px}.tot{text-align:right;font-weight:700;color:#b42318}
+@media print{aside,.top,.np,#ov{display:none!important}main{margin:0!important}body{background:#fff}.sheet{border:0;page-break-after:always}}
+</style>
+</head><body><div id="app"></div>
+<script src="config.js"></script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const L=['Knowledge','Understanding','Application','Analysis','Evaluation','Creation'];
+const DEF={overN:6,grades:'',bands:[{min:80,name:'Distinction',c:'Excellent work. Keep it up.'},{min:60,name:'Credit',c:'Good work. Aim higher.'},{min:40,name:'Pass',c:'Fair. More practice needed.'},{min:0,name:'Needs help',c:'Please revise and ask for help.'}]};
+let SET=DEF,SS={},U=JSON.parse(localStorage.getItem('u')||'null'),V='home',C={},G=[],QS=[],QI=0,PID=0,M='l',SUBS=[],CLS=[],PP={},NT={},DL='',SELC=null,PQ=new URLSearchParams(location.search).get('p');
+const T=['create table if not exists x_schools(id integer primary key autoincrement,name text,code text unique,tcode text,settings text)',
+'create table if not exists x_users(id integer primary key autoincrement,school_id int,name text,role text,gender text,cls text,pin text,pinp text,cno text,phone text,email text)',
+'create table if not exists x_classes(id integer primary key autoincrement,school_id int,name text,code text unique)',
+'create table if not exists x_subjects(id integer primary key autoincrement,school_id int,name text,short text)',
+'create table if not exists x_topics(id integer primary key autoincrement,school_id int,cls text,term text,subject text,name text)',
+'create table if not exists x_subtopics(id integer primary key autoincrement,topic_id int,name text)',
+'create table if not exists x_comps(id integer primary key autoincrement,topic_id int,sub_id int,name text)',
+'create table if not exists x_papers(id integer primary key autoincrement,school_id int,teacher_id int,title text,cls text,term text,subject text,status text,pdate text,deadline text,plan text,shuffle int)',
+'create table if not exists x_questions(id integer primary key autoincrement,paper_id int,n int,sec text,stem text,topic_id int,sub_id int,comp_id int)',
+'create table if not exists x_parts(id integer primary key autoincrement,paper_id int,qq int,qn int,label text,n text,text text,kind text,marks real,spaces int,bloom text,data text,guide text)',
+'create table if not exists x_submissions(id integer primary key autoincrement,paper_id int,learner_id int)',
+'create table if not exists x_answers(id integer primary key autoincrement,sub_id int,qid int,idx int,answer text,norm text,score real,comment text)',
+'create index if not exists j1 on x_answers(qid,norm)','create index if not exists j2 on x_answers(sub_id)','create index if not exists j3 on x_parts(paper_id)','create index if not exists j4 on x_questions(paper_id)',
+'create index if not exists j5 on x_topics(school_id,subject)','create index if not exists j6 on x_users(school_id,role,pin)','create index if not exists j7 on x_submissions(paper_id,learner_id)','create index if not exists j8 on x_subtopics(topic_id)','create index if not exists j9 on x_comps(topic_id)'];
+const cfg=()=>{const c=window.CFG||{};return c.url&&c.token?{url:c.url.replace('libsql://','https://'),token:c.token}:JSON.parse(localStorage.getItem('cfg')||'null')};
+const arg=v=>v==null?{type:'null'}:typeof v==='number'?(Number.isInteger(v)?{type:'integer',value:String(v)}:{type:'float',value:v}):{type:'text',value:String(v)};
+async function pipe(list){const c=cfg();const r=await fetch(c.url+'/v2/pipeline',{method:'POST',headers:{Authorization:'Bearer '+c.token,'Content-Type':'application/json'},body:JSON.stringify({requests:[...list.map(([sql,a=[]])=>({type:'execute',stmt:{sql,args:a.map(arg)}})),{type:'close'}]})});
+ const j=await r.json();if(!j.results)throw new Error(j.error||'Database error');
+ return j.results.slice(0,list.length).map(x=>{if(x.type==='error')throw new Error(x.error.message);const q=x.response.result;return q.rows.map(w=>Object.fromEntries(q.cols.map((c,i)=>[c.name,w[i].value])))})}
+const db=async(sql,a=[])=>(await pipe([[sql,a]]))[0];
+const ins=async(s,a)=>Number((await db(s,a))[0].id);
+async function migrate(){if(localStorage.getItem('mig')==='x2')return;let ok=true;for(const q of T)try{await db(q)}catch(e){ok=false}try{await db('alter table x_users add column tcls text')}catch(e){if(!/duplicate/i.test(e.message))ok=false}if(ok)localStorage.setItem('mig','x2')}
+const hash=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+const opts=(r,k='name')=>r.map(x=>`<option value="${x.id}">${esc(x[k])}</option>`).join('');
+const val=id=>$('#'+id).value.trim(),safe=f=>async(...a)=>{try{await f(...a)}catch(e){alert(e.message)}};
+const pc=t=>t&&t[1]?Math.round(t[0]/t[1]*100):0,band=p=>SET.bands.find(b=>p>=b.min)||SET.bands[SET.bands.length-1];
+const norm=s=>s.toLowerCase().replace(/\s+/g,' ').replace(/[.,;!]+$/,'').trim();
+const grade=p=>{for(const l of (SET.grades||'').split('\n')){const m=l.match(/(\d+)\s*-\s*(\d+)\s*=\s*(\S+)/);if(m&&p>=+m[1]&&p<=+m[2])return m[3]}return''},gtxt=p=>grade(p)?` · Grade ${grade(p)}`:'';
+const bars=b=>L.map(l=>{const v=b[l];if(!v||!v[1])return `<div class=bar><span>${l}</span><div></div><em>-</em></div>`;const p=pc(v);return `<div class=bar><span>${l}</span><div><i class="${p>=70?'g':p>=50?'o':'r'}" style="width:${p}%"></i></div><em>${p}%</em></div>`}).join('');
+const dl=(id,a)=>`<datalist id=${id}>${[...new Set(a)].map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`;
+const fd=x=>x?String(x).replace('T',' '):'',base=()=>location.href.split('?')[0].split('#')[0],wa=t=>window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');
+const myCls=()=>{const a=(U.tcls||'').split('|').filter(Boolean);return U.role==='teacher'&&a.length?CLS.filter(c=>a.includes(c.name)):CLS};
+const TF=()=>U.role==='super'?'%':String(U.id);
+const rcode=()=>{const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:5},()=>a[Math.floor(Math.random()*a.length)]).join('')};
+const rnd4=()=>String(Math.floor(1000+Math.random()*9000));
+
+/* ---------- connection (owner only) ---------- */
+function setup(){const c=cfg()||{};$('#app').innerHTML=`<div class=lg><div class=hero><img src=logo-96.png><h2>MELAN</h2></div><div class=card><b>App not connected</b><p class=m>The admin puts the Turso URL and token in the file config.js once. For a quick test you can type them here.</p><input id=du placeholder="libsql://your-db.turso.io" value="${esc(c.url||'')}"><input id=dt placeholder="Auth token" value="${esc(c.token||'')}"><button onclick="saveCfg()">Save</button></div></div>`}
+const saveCfg=safe(async()=>{localStorage.setItem('cfg',JSON.stringify({url:val('du').replace('libsql://','https://'),token:val('dt')}));localStorage.removeItem('mig');await migrate();auth()});
+
+/* ---------- sign in / register ---------- */
+function auth(){const t=M;$('#app').innerHTML=`<div class=lg><div class=hero><img src=logo-96.png><h2>MELAN</h2><p>Learn. Practice. Grow. · v7</p></div>
+<div class=tabs>${[['l','Learner'],['t','Teacher'],['o','Admin']].map(x=>`<button class="${t===x[0]?'on':''}" onclick="M='${x[0]}';auth()">${x[1]}</button>`).join('')}</div>
+<div class=card>${t!=='o'?'<input id=sc placeholder="School code" autocapitalize=characters>':''}${t==='l'?'<input id=pn type=password inputmode=numeric maxlength=4 placeholder="Your 4-digit code">':'<input id=nm placeholder="Your name"><input id=pn type=password placeholder="PIN">'}<button onclick="login()">Sign in</button></div>
+${t==='l'?`<details class=card><summary><b>New learner? Register here</b></summary><p class=m>Use the school code and the class code your teacher gave you.</p><input id=rs placeholder="School code" autocapitalize=characters><input id=rc placeholder="Class code" autocapitalize=characters><input id=rn placeholder="YOUR NAMES IN CAPITAL LETTERS" style="text-transform:uppercase"><select id=rg><option value=F>Girl</option><option value=M>Boy</option></select><input id=rph placeholder="Parent phone (optional)"><input id=rp type=password inputmode=numeric maxlength=4 placeholder="Choose a 4-digit code you will remember"><button onclick="regL()">Register</button></details>`:''}
+${t==='o'?'<div id=ow></div>':''}</div>`;if(t==='o')ownerBox()}
+const ownerBox=safe(async()=>{const n=(await db("select count(*) c from x_users where role='super'"))[0].c;$('#ow').innerHTML=+n?'':`<div class=card><b>First time: create the admin</b><input id=on placeholder="Admin name"><input id=op type=password placeholder="PIN"><button onclick="mkOwner()">Create admin</button></div>`});
+const mkOwner=safe(async()=>{if(!val('on')||val('op').length<4)throw new Error('Enter a name and a PIN of 4 or more characters');if(+(await db("select count(*) c from x_users where role='super'"))[0].c)throw new Error('An admin already exists');
+ const id=await ins("insert into x_users(school_id,name,role,pin) values(0,?,'super',?) returning id",[val('on'),await hash(val('op'))]);start({id,sid:0,name:val('on'),role:'super',sn:'MELAN Admin'})});
+const login=safe(async()=>{await migrate();let u,s;
+ if(M==='o'){u=(await db("select * from x_users where role='super' and lower(name)=lower(?) and pin=?",[val('nm'),await hash(val('pn'))]))[0];if(!u)throw new Error('Wrong name or PIN');return start({id:+u.id,sid:0,name:u.name,role:'super',sn:'MELAN Admin'})}
+ s=(await db('select * from x_schools where code=?',[val('sc').toUpperCase()]))[0];if(!s)throw new Error('School code not found');
+ u=M==='t'?(await db("select * from x_users where school_id=? and role='teacher' and lower(name)=lower(?) and pin=?",[s.id,val('nm'),await hash(val('pn'))]))[0]:(await db("select * from x_users where school_id=? and role='learner' and pin=?",[s.id,await hash(val('pn'))]))[0];
+ if(!u)throw new Error(M==='t'?'Name or PIN is wrong':'That code is not right for this school');start({id:+u.id,sid:+s.id,name:u.name,role:u.role,cls:u.cls,cno:u.cno,sn:s.name,tcls:u.tcls})});
+const regL=safe(async()=>{await migrate();const s=(await db('select * from x_schools where code=?',[val('rs').toUpperCase()]))[0];if(!s)throw new Error('School code not found');
+ const c=(await db('select * from x_classes where school_id=? and code=?',[s.id,val('rc').toUpperCase()]))[0];if(!c)throw new Error('Class code not found. Ask your teacher');
+ const nm=val('rn').toUpperCase(),pin=val('rp');if(!nm)throw new Error('Enter your names');if(!/^\d{4}$/.test(pin))throw new Error('Your code must be exactly 4 digits');
+ const h=await hash(pin);if((await db("select id from x_users where school_id=? and role='learner' and pin=?",[s.id,h]))[0])throw new Error('Another learner already uses this code. Choose different 4 digits');
+ let cno;do{cno='C'+Math.floor(100+Math.random()*900)}while((await db('select id from x_users where school_id=? and cno=?',[s.id,cno]))[0]);
+ const id=await ins("insert into x_users(school_id,name,role,gender,cls,pin,pinp,cno,phone) values(?,?,'learner',?,?,?,?,?,?) returning id",[s.id,nm,val('rg'),c.name,h,pin,cno,val('rph')]);
+ start({id,sid:+s.id,name:nm,role:'learner',cls:c.name,cno,sn:s.name})});
+async function start(u){await migrate();U=u;localStorage.setItem('u',JSON.stringify(u));
+ if(u.sid){SS=(await db('select * from x_schools where id=?',[u.sid]))[0];SET={...DEF,...JSON.parse(SS.settings||'{}')};if(u.role!=='learner')await loadRef();if(u.role==='teacher')U.tcls=(await db('select tcls from x_users where id=?',[u.id]))[0].tcls}
+ shell();if(PQ&&u.role!=='super'){const p=PQ;PQ=null;openShared(p)}}
+const loadRef=async()=>{[SUBS,CLS]=await Promise.all([db('select * from x_subjects where school_id=? order by name',[U.sid]),db('select * from x_classes where school_id=? order by name',[U.sid])])};
+const out=()=>{localStorage.removeItem('u');U=null;auth()};
+const openShared=safe(async pid=>{const p=(await db('select * from x_papers where id=?',[pid]))[0];if(!p||p.school_id!=U.sid)return alert('This paper is not available to you');
+ if(U.role==='learner'){if((p.cls||'').toLowerCase()!==(U.cls||'').toLowerCase()||p.status==='draft')return alert('This paper is not for your class');nav('lp');const s=(await db('select id from x_submissions where paper_id=? and learner_id=?',[pid,U.id]))[0];return lOpen(pid,s?+s.id:0,p.status,p.deadline||'')}
+ qView(pid)});
+
+/* ---------- owner: schools and teachers ---------- */
+const vSch=safe(async()=>{window.SCH=await db("select s.*,(select count(*) from x_users where school_id=s.id and role='teacher') tc,(select count(*) from x_users where school_id=s.id and role='learner') lc from x_schools s order by id desc");
+ $('#v').innerHTML=`<div class=card><b>Register a school</b><p class=m>${U.sid?'You are inside <b>'+esc(U.sn)+'</b> with full access. Choose another school below to switch.':'Tap Open school on any school to see and manage everything in it, as a teacher.'}</p><p class=m>Each school gets its own code. Learners and teachers sign in with it.</p><input id=ns placeholder="School name"><button onclick="addSchool()">Create school</button></div>`+SCH.map((s,i)=>`<div class=card><div class=row><b>${esc(s.name)}</b><span class=tag>Code ${esc(s.code)}</span></div><div class=m>${s.tc} teacher(s) · ${s.lc} learner(s)</div><div class=row style="margin-top:6px"><button class=pri onclick="enterSchool(${i})">Open school</button><button class=ghost onclick="addTeacher(${i})">Add teacher</button><button class=ghost onclick="shareSch(${i})">Share on WhatsApp</button></div></div>`).join('')});
+const enterSchool=safe(async i=>{U.sid=+SCH[i].id;U.sn=SCH[i].name;localStorage.setItem('u',JSON.stringify(U));SS=SCH[i];SET={...DEF,...JSON.parse(SS.settings||'{}')};await loadRef();shell()});
+const vTch=safe(async()=>{await loadRef();const r=await db("select id,name,tcls from x_users where school_id=? and role='teacher' order by name",[U.sid]);
+ $('#v').innerHTML=`<div class=card><b>Teachers in ${esc(U.sn)}</b><p class=m>You decide which classes each teacher can use. A teacher with no class ticked can use all classes.</p><button onclick="addT2()">Add teacher</button></div>`+
+ r.map(t=>{const a=(t.tcls||'').split('|');return `<div class=card><b>${esc(t.name)}</b><div class=chips>${CLS.map(c=>`<label><input type=checkbox style="width:auto" class="tc${t.id}" value="${esc(c.name)}" ${a.includes(c.name)?'checked':''}> ${esc(c.name)}</label>`).join('')||'<span class=m>Add classes first</span>'}</div><div class=row><button class=pri onclick="saveTc(${t.id})">Save classes</button><button class=ghost onclick="resetT(${t.id})">Reset PIN</button></div></div>`}).join('')||'<p class=m>No teachers yet.</p>'});
+const saveTc=safe(async id=>{await db('update x_users set tcls=? where id=?',[$$('.tc'+id+':checked').map(x=>x.value).join('|'),id]);alert('Saved')});
+const resetT=safe(async id=>{const p=prompt('New PIN for this teacher (4 or more characters)');if(!p||p.length<4)return;await db('update x_users set pin=? where id=?',[await hash(p),id]);alert('PIN changed. Tell the teacher.')});
+const addT2=safe(async()=>{const n=prompt('Teacher full name');if(!n)return;const p=prompt('Give the teacher a PIN (4 or more characters)');if(!p||p.length<4)throw new Error('PIN is too short');
+ if((await db("select id from x_users where school_id=? and role='teacher' and lower(name)=lower(?)",[U.sid,n]))[0])throw new Error('A teacher with this name already exists');await db("insert into x_users(school_id,name,role,pin) values(?,?,'teacher',?)",[U.sid,n.trim(),await hash(p)]);
+ if(confirm('Teacher added. Send the sign-in details on WhatsApp?'))wa(`MELAN teacher account for ${U.sn}. Open ${base()} , choose Teacher. School code: ${SS.code}. Name: ${n.trim()}. PIN: ${p}`);vTch()});
+const addSchool=safe(async()=>{if(!val('ns'))throw new Error('Enter the school name');let c;do{c='S'+rcode().slice(0,4)}while((await db('select id from x_schools where code=?',[c]))[0]);await db('insert into x_schools(name,code) values(?,?)',[val('ns'),c]);vSch()});
+const addTeacher=safe(async i=>{const s=SCH[i],n=prompt('Teacher full name');if(!n)return;const p=prompt('Give the teacher a PIN (4 or more characters)');if(!p||p.length<4)throw new Error('PIN is too short');
+ if((await db("select id from x_users where school_id=? and role='teacher' and lower(name)=lower(?)",[s.id,n]))[0])throw new Error('A teacher with this name already exists');
+ await db("insert into x_users(school_id,name,role,pin) values(?,?,'teacher',?)",[s.id,n.trim(),await hash(p)]);if(confirm('Teacher added. Send the sign-in details on WhatsApp?'))wa(`MELAN teacher account for ${s.name}. Open ${base()} , choose Teacher. School code: ${s.code}. Name: ${n.trim()}. PIN: ${p}`);vSch()});
+const shareSch=i=>wa(`${SCH[i].name} is now on MELAN. Open ${base()} . School code: ${SCH[i].code}`);
+
+/* ---------- shell with sidebar ---------- */
+const navFor=()=>U.role==='super'&&U.sid?[...NAV.teacher,['tch','👩‍🏫 Teachers'],['sch','🏫 All schools']]:NAV[U.role];
+const NAV={super:[['sch','🏫 Schools']],teacher:[['home','🏠 Home'],['cur','📚 Curriculum'],['cls','🏷️ Classes & subjects'],['papers','📝 Papers'],['lrn','👥 Learners'],['rep','📊 Reports'],['shr','🔗 Share'],['set','⚙️ Settings']],learner:[['lhome','🏠 Home'],['lp','📝 My papers'],['perf','📊 My report']]};
+function shell(){$('#app').innerHTML=`<div class=top><button onclick="side()">☰</button><b>MELAN</b></div><aside id=sd><div class=brand><img src=logo-96.png><div><b>MELAN</b><small>${esc(U.sn)} · v7</small></div></div>${navFor().map(x=>`<a class=ni id=n-${x[0]} onclick="nav('${x[0]}')" style="text-decoration:none">${x[1]}</a>`).join('')}<div class=who>${esc(U.name)}${U.cno?'<br>Candidate no. '+esc(U.cno):''}<a onclick="out()">Log out</a></div></aside><div id=ov onclick="side()"></div><main id=v></main>`;nav(navFor()[0][0])}
+const side=()=>{$('#sd').classList.toggle('open');$('#ov').classList.toggle('on')};
+const views={home:()=>vHome(),cur:()=>vCur(),cls:()=>vCls(),papers:()=>vPapers(),lrn:()=>vLrn(),rep:()=>vRep(),shr:()=>vShr(),set:()=>vSet(),lhome:()=>vLhome(),lp:()=>vLp(),perf:()=>vPerf(),sch:()=>vSch(),tch:()=>vTch()};
+function nav(v){V=v;$$('.ni').forEach(b=>b.classList.toggle('on',b.id==='n-'+v));$('#sd').classList.remove('open');$('#ov').classList.remove('on');window.scrollTo(0,0);safe(views[v])()}
+
+/* ---------- coverage (over-set reminders) ---------- */
+async function cov(){const a=[TF(),U.sid];
+ const [t,s]=await Promise.all([db('select t.*,(select count(*) from x_questions q join x_papers p on p.id=q.paper_id where q.topic_id=t.id and p.teacher_id like ?) n from x_topics t where t.school_id=? order by cls,term,subject,name',a),
+ db('select s.*,(select count(*) from x_questions q join x_papers p on p.id=q.paper_id where q.sub_id=s.id and p.teacher_id like ?) n from x_subtopics s where topic_id in(select id from x_topics where school_id=?)',a)]);return{t,s}}
+const flag=n=>n>=SET.overN?'red':n==0?'org':'grn';
+function tree(d,only){const by={};d.t.forEach(x=>(by[x.cls]??=[]).push(x));let h='';
+ for(const c in by){const ts=by[c].filter(x=>!only||x.n>=SET.overN||(x.n==0)||d.s.some(s=>s.topic_id==x.id&&s.n>=SET.overN));if(!ts.length)continue;const tot=by[c].reduce((a,x)=>a+ +x.n,0);
+  h+=`<div class=card><b>${esc(c)}</b> <span class=m>${tot} questions picked from this class</span>`+ts.map(x=>`<div style="margin:8px 0"><span class="${flag(+x.n)}"><b>${esc(x.name)}</b></span> <span class=m>${esc(x.subject)}, Term ${esc(x.term)} · set ${x.n}×${x.n>=SET.overN?' · OVER-SET':x.n==0?' · not set yet':''}</span>`+
+  d.s.filter(s=>s.topic_id==x.id&&(!only||s.n>=SET.overN||s.n==0)).map(s=>`<div class="m ${flag(+s.n)}" style="margin-left:14px">- ${esc(s.name)} (${s.n}×)${s.n>=SET.overN?' over-set':s.n==0?' ignored':''}</div>`).join('')+'</div>').join('')+'</div>'}
+ return h||'<p class=m>Nothing to report yet.</p>'}
+const vHome=async()=>{const [d,m,n]=await Promise.all([cov(),db('select count(distinct a.sub_id) c from x_answers a join x_submissions s on s.id=a.sub_id join x_papers p on p.id=s.paper_id where p.school_id=? and a.score is null',[U.sid]),
+ db("select (select count(*) from x_users where school_id=? and role='learner') l,(select count(*) from x_papers where school_id=? and teacher_id like ?) p",[U.sid,U.sid,TF()])]);
+ const ov=d.t.filter(x=>x.n>=SET.overN).length,ig=d.t.filter(x=>x.n==0).length;
+ $('#v').innerHTML=`<div class=card><h2 style="margin:0">Welcome, ${esc(U.name)}</h2><p class=m>${esc(SS.name)} · School code <b>${esc(SS.code)}</b></p><div class=row><div><b style="font-size:26px">${n[0].l}</b><br><span class=m>learners</span></div><div><b style="font-size:26px">${n[0].p}</b><br><span class=m>my papers</span></div><div><b style="font-size:26px" class=org>${m[0].c}</b><br><span class=m>scripts waiting to be marked</span></div></div></div>
+ <div class=card><b>Reminders</b><p class=m>You are over-setting <b class=red>${ov}</b> topic(s) (${SET.overN} or more questions) and ignoring <b class=org>${ig}</b> topic(s). Subtopics and the classes you pick from are listed below.</p><button onclick="nav('papers')">Set or mark a paper</button></div>`+tree(d,true)};
+
+/* ---------- curriculum ---------- */
+async function vCur(){const t=await db('select t.*,(select count(*) from x_subtopics where topic_id=t.id) sc,(select count(*) from x_comps where topic_id=t.id) cc,(select count(*) from x_questions q join x_papers p on p.id=q.paper_id where q.topic_id=t.id and p.teacher_id like ?) n from x_topics t where school_id=? order by cls,term,subject,name',[TF(),U.sid]);window.TP=t;
+ $('#v').innerHTML=`<div class=card><b>Find a topic</b><input id=cs placeholder="Search by topic, class or subject" oninput="curList()"></div>
+ <details class=card><summary><b>Add new topics (outline)</b></summary>${CLS.length&&SUBS.length?`<p class=m>Choose class, term and subject. A plain line is a topic, a line starting with - is a subtopic, and a line starting with * is a competence under the subtopic above it. You can add more later.</p>
+ <select id=o1>${myCls().map(c=>`<option>${esc(c.name)}</option>`).join('')}</select><div class=row><select id=o2><option>1</option><option>2</option><option>3</option></select><select id=o3>${SUBS.map(c=>`<option value="${esc(c.name)}">${esc(c.name)} (${esc(c.short)})</option>`).join('')}</select></div>
+ <textarea id=o4 style="min-height:130px" placeholder="Types of computers&#10;- Laptop&#10;* Learner can compare computers&#10;- Desktop"></textarea><button onclick="saveOutline()">Save outline</button>`:'<p class=m>First add your classes and subjects under Classes & subjects.</p>'}</details><div id=cl></div>`;curList()}
+const curList=()=>{const k=($('#cs').value||'').toLowerCase();$('#cl').innerHTML=TP.filter(x=>(x.name+' '+x.cls+' '+x.subject).toLowerCase().includes(k)).map(x=>`<div class=card onclick="topicPage(${x.id})"><div class=row><b class="${flag(+x.n)}">${esc(x.name)}</b><span class=m>${esc(x.cls)} · T${esc(x.term)} · ${esc(x.subject)}</span></div><div class=m>${x.sc} subtopics · ${x.cc} competences · set ${x.n}×${x.n>=SET.overN?' (over-set)':''}</div></div>`).join('')||'<p class=m>No topic found.</p>'};
+const lines=id=>$('#'+id).value.split('\n').map(x=>x.trim().replace(/^[-*]\s*/,'')).filter(Boolean);
+const topicPage=safe(async id=>{const t=(await db('select * from x_topics where id=?',[id]))[0];
+ const [s,c]=await Promise.all([db('select s.*,(select count(*) from x_questions q join x_papers p on p.id=q.paper_id where q.sub_id=s.id and p.teacher_id like ?) n from x_subtopics s where topic_id=? order by id',[TF(),id]),db('select * from x_comps where topic_id=? order by id',[id])]);
+ const ed=(tb,i)=>`<a onclick="ren('${tb}',${i},${id})">✎</a> <a onclick="del('${tb}',${i},${id})">✕</a>`;
+ $('#v').innerHTML=`<button class="pri ghost" onclick="nav('cur')">Back to topics</button><br><br><div class=card><div class=row><b>${esc(t.name)}</b><span>${ed('x_topics',id)}</span></div><div class=m>${esc(t.cls)} · Term ${esc(t.term)} · ${esc(t.subject)}</div>
+ <details><summary class=m>Change class, term or subject</summary><select id=tc>${CLS.map(x=>`<option ${x.name===t.cls?'selected':''}>${esc(x.name)}</option>`).join('')}</select><select id=tm>${[1,2,3].map(x=>`<option ${x==t.term?'selected':''}>${x}</option>`).join('')}</select><select id=ts>${SUBS.map(x=>`<option ${x.name===t.subject?'selected':''}>${esc(x.name)}</option>`).join('')}</select><button class=pri onclick="moveTopic(${id})">Save changes</button></details>
+ <p class=m>Add more subtopics, one per line:</p><textarea id=ns1></textarea><button onclick="addSubs(${id})">Add subtopics</button></div>`+
+ s.map(x=>`<div class=card><div class=row><b>${esc(x.name)} <span class="m ${flag(+x.n)}">set ${x.n}×</span></b><span>${ed('x_subtopics',x.id)}</span></div>${c.filter(y=>y.sub_id==x.id).map(y=>`<div class="row m"><span>- ${esc(y.name)}</span><span>${ed('x_comps',y.id)}</span></div>`).join('')}<textarea id=nc${x.id} placeholder="Add competences, one per line"></textarea><button class=ghost onclick="addComps(${x.id},${id})">Add competences</button></div>`).join('')+
+ (c.some(y=>!y.sub_id)?`<div class=card><b>Other competences</b>${c.filter(y=>!y.sub_id).map(y=>`<div class="row m"><span>- ${esc(y.name)}</span><span>${ed('x_comps',y.id)}</span></div>`).join('')}</div>`:'')});
+const OKT=['x_topics','x_subtopics','x_comps'];
+const ren=safe(async(tb,id,tid)=>{if(!OKT.includes(tb))return;const cur=(await db(`select name from ${tb} where id=?`,[id]))[0].name,n=prompt('Edit name',cur);if(!n||!n.trim())return;await db(`update ${tb} set name=? where id=?`,[n.trim(),id]);topicPage(tid)});
+const del=safe(async(tb,id,tid)=>{if(!OKT.includes(tb))return;if(tb==='x_topics'&&+(await db('select count(*) c from x_questions where topic_id=?',[id]))[0].c)throw new Error('Questions already use this topic, so it cannot be deleted');
+ if(tb==='x_subtopics'&&+(await db('select count(*) c from x_questions where sub_id=?',[id]))[0].c)throw new Error('Questions already use this subtopic');if(!confirm('Delete this? It cannot be undone.'))return;
+ if(tb==='x_topics'){await db('delete from x_subtopics where topic_id=?',[id]);await db('delete from x_comps where topic_id=?',[id])}if(tb==='x_subtopics')await db('delete from x_comps where sub_id=?',[id]);await db(`delete from ${tb} where id=?`,[id]);tb==='x_topics'?nav('cur'):topicPage(tid)});
+const moveTopic=safe(async id=>{await db('update x_topics set cls=?,term=?,subject=? where id=?',[val('tc'),val('tm'),val('ts'),id]);topicPage(id)});
+const addSubs=safe(async tid=>{for(const n of lines('ns1'))if(!(await db('select id from x_subtopics where topic_id=? and lower(name)=lower(?)',[tid,n]))[0])await db('insert into x_subtopics(topic_id,name) values(?,?)',[tid,n]);topicPage(tid)});
+const addComps=safe(async(sid,tid)=>{for(const n of lines('nc'+sid))if(!(await db('select id from x_comps where sub_id=? and lower(name)=lower(?)',[sid,n]))[0])await db('insert into x_comps(topic_id,sub_id,name) values(?,?,?)',[tid,sid,n]);topicPage(tid)});
+const saveOutline=safe(async()=>{const cls=val('o1'),term=val('o2'),sub=val('o3'),txt=$('#o4').value;if(!txt.trim())throw new Error('Type the outline');let t=null,sb=null;
+ for(const raw of txt.split('\n')){const l=raw.trim();if(!l)continue;const k=l[0],name=l.replace(/^[-*]\s*/,'');
+  if(k==='-'){if(!t)continue;const e=(await db('select id from x_subtopics where topic_id=? and lower(name)=lower(?)',[t,name]))[0];sb=e?+e.id:await ins('insert into x_subtopics(topic_id,name) values(?,?) returning id',[t,name])}
+  else if(k==='*'){if(!t)continue;if(!(await db('select id from x_comps where topic_id=? and sub_id is ? and lower(name)=lower(?)',[t,sb,name]))[0])await db('insert into x_comps(topic_id,sub_id,name) values(?,?,?)',[t,sb,name])}
+  else{const e=(await db('select id from x_topics where school_id=? and cls=? and term=? and lower(subject)=lower(?) and lower(name)=lower(?)',[U.sid,cls,term,sub,name]))[0];t=e?+e.id:await ins('insert into x_topics(school_id,cls,term,subject,name) values(?,?,?,?,?) returning id',[U.sid,cls,term,sub,name]);sb=null}}
+ nav('cur')});
+
+/* ---------- classes and subjects ---------- */
+const DS=[['English','ENG'],['Mathematics','MTC'],['Science','SCIE'],['Social Studies','SST'],['Religious Education','RE'],['Computer Studies','ICT'],['Literacy','LIT'],['Kiswahili','KIS']];
+const vCls=safe(async()=>{await loadRef();
+ $('#v').innerHTML=`<div class=card><b>Subjects</b><p class=m>Tap a button to add a subject, or add your own below. Tap a subject below to edit or delete it.</p><div class=chips>${DS.filter(d=>!SUBS.some(s=>s.short===d[1])).map(d=>`<label onclick="addSub('${d[0]}','${d[1]}')">+ ${d[0]} (${d[1]})</label>`).join('')}</div><hr><div class=chips>${SUBS.map(s=>`<label onclick="editSub(${s.id})">${esc(s.name)} (${esc(s.short)})</label>`).join('')||'<span class=m>No subjects yet</span>'}</div>
+ <div class=row><input id=sn1 placeholder="New subject"><input id=sn2 placeholder="Short form" style="max-width:120px"></div><button onclick="addSub()">Add more subjects</button></div>
+ <div class=card><b>Classes</b><p class=m>Each class has its own code. Learners need it to register.</p>${CLS.map(c=>`<div class=row style="margin:6px 0"><span><b>${esc(c.name)}</b> <span class=tag>Code ${esc(c.code)}</span></span><span><a onclick="renCls(${c.id})">Edit</a> · <a onclick="shareCls(${c.id})">Share</a> · <a onclick="delCls(${c.id})">Delete</a></span></div>`).join('')}<input id=cn1 placeholder="New class, for example P5"><button onclick="addCls()">Add class</button></div>`});
+const addSub=safe(async(n,sh)=>{n=n||val('sn1');sh=sh||val('sn2');if(!n||!sh)throw new Error('Enter the subject and its short form');if(!SUBS.some(s=>s.short.toLowerCase()===sh.toLowerCase()))await db('insert into x_subjects(school_id,name,short) values(?,?,?)',[U.sid,n,sh.toUpperCase()]);vCls()});
+const editSub=safe(async id=>{const s=SUBS.find(x=>x.id==id),n=prompt('Subject name (leave empty to delete)',s.name);if(n===null)return;
+ if(!n.trim()){if(confirm('Delete this subject?')){await db('delete from x_subjects where id=?',[id]);vCls()}return}const sh=prompt('Short form',s.short)||s.short;
+ await db('update x_subjects set name=?,short=? where id=?',[n.trim(),sh.toUpperCase(),id]);for(const t of ['x_topics','x_papers'])await db(`update ${t} set subject=? where school_id=? and subject=?`,[n.trim(),U.sid,s.name]);vCls()});
+const addCls=safe(async()=>{const n=val('cn1');if(!n)throw new Error('Enter the class name');let c;do{c=rcode()}while((await db('select id from x_classes where code=?',[c]))[0]);await db('insert into x_classes(school_id,name,code) values(?,?,?)',[U.sid,n,c]);vCls()});
+const renCls=safe(async id=>{const c=CLS.find(x=>x.id==id),n=prompt('Class name',c.name);if(!n||!n.trim())return;for(const t of ['x_topics','x_papers','x_users'])await db(`update ${t} set cls=? where school_id=? and cls=?`,[n.trim(),U.sid,c.name]);await db('update x_classes set name=? where id=?',[n.trim(),id]);vCls()});
+const delCls=safe(async id=>{const c=CLS.find(x=>x.id==id);if(+(await db("select count(*) c from x_users where school_id=? and cls=?",[U.sid,c.name]))[0].c)throw new Error('Learners are in this class. Move them first');if(confirm('Delete this class?')){await db('delete from x_classes where id=?',[id]);vCls()}});
+const shareCls=id=>{const c=CLS.find(x=>x.id==id);wa(`Join ${SS.name} on MELAN. Open ${base()} , choose Learner, then Register. School code: ${SS.code}. Class code for ${c.name}: ${c.code}. Write your names in capital letters and choose a 4-digit code you will remember.`)};
+const shareApp=()=>wa(`${SS.name} is on MELAN. Open ${base()} . School code: ${SS.code}. You also need your class code from your teacher.`);
+const vShr=()=>{$('#v').innerHTML=`<div class=card><b>Share MELAN</b><p class=m>WhatsApp opens and you choose who receives it, such as a parent or learner.</p><button onclick="shareApp()">Share the app link</button></div><div class=card><b>Share by class</b><p class=m>The message includes the class code.</p>${CLS.map(c=>`<div class=row style="margin:6px 0"><span><b>${esc(c.name)}</b> <span class=tag>${esc(c.code)}</span></span><button class=ghost onclick="shareCls(${c.id})">Share on WhatsApp</button></div>`).join('')||'<p class=m>Add classes first.</p>'}</div>`};
+
+/* ---------- learners ---------- */
+const vLrn=safe(async()=>{window.LR=await db("select id,name,gender,cls,phone,email,pinp,cno from x_users where school_id=? and role='learner' order by cls,name",[U.sid]);
+ $('#v').innerHTML=`<div class=card><input id=ls placeholder="Search learner by name, class or number" oninput="lrnList()"></div><div id=ll></div>`;lrnList()});
+const lrnList=()=>{const k=($('#ls').value||'').toLowerCase();$('#ll').innerHTML=LR.filter(x=>(x.name+' '+x.cls+' '+x.cno).toLowerCase().includes(k)).slice(0,80).map(x=>`<div class="card row" onclick="lrnPage(${x.id})"><span><b>${esc(x.name)}</b><br><span class=m>${esc(x.cls)} · ${x.gender==='M'?'Boy':'Girl'} · ${esc(x.cno)}</span></span></div>`).join('')||'<p class=m>No learner found.</p>'};
+const lrnPage=safe(async id=>{const x=LR.find(y=>y.id==id),r=await db('select s.id sid,p.title,(select sum(score) from x_answers where sub_id=s.id) got,(select sum(q.marks) from x_answers a join x_parts q on q.id=a.qid where a.sub_id=s.id) mx from x_submissions s join x_papers p on p.id=s.paper_id where s.learner_id=? order by s.id desc',[id]);
+ $('#v').innerHTML=`<button class="pri ghost" onclick="nav('lrn')">Back</button><br><br><div class=card><b>${esc(x.name)}</b> <span class=m>${esc(x.cls)} · Candidate no. ${esc(x.cno)}</span><p>Login code: <b style="font-size:24px">${esc(x.pinp||'not set')}</b></p><button onclick="resetPin(${id})">Reset login code</button>
+ <select id=lcl>${CLS.map(c=>`<option ${c.name===x.cls?'selected':''}>${esc(c.name)}</option>`).join('')}</select><button class=ghost onclick="setCls(${id})">Move to this class</button>
+ <input id=lp1 placeholder="Parent phone for SMS" value="${esc(x.phone)}"><input id=lp2 placeholder="Parent email" value="${esc(x.email)}"><button class=ghost onclick="savePh(${id})">Save contacts</button></div>`+
+ r.map(z=>`<div class="card row" onclick="showScript(${z.sid},'lrnPage(${id})')"><b>${esc(z.title)}</b><span>${pc([+z.got,+z.mx])}%</span></div>`).join('')});
+const resetPin=safe(async id=>{if(!confirm('Give this learner a new login code?'))return;let p,h;do{p=rnd4();h=await hash(p)}while((await db("select id from x_users where school_id=? and role='learner' and pin=?",[U.sid,h]))[0]);
+ await db('update x_users set pin=?,pinp=? where id=?',[h,p,id]);LR.find(y=>y.id==id).pinp=p;alert('New login code: '+p+'. Tell the learner.');lrnPage(id)});
+const setCls=safe(async id=>{await db('update x_users set cls=? where id=?',[val('lcl'),id]);LR.find(y=>y.id==id).cls=val('lcl');alert('Moved');lrnPage(id)});
+const savePh=safe(async id=>{await db('update x_users set phone=?,email=? where id=?',[val('lp1'),val('lp2'),id]);const x=LR.find(y=>y.id==id);x.phone=val('lp1');x.email=val('lp2');alert('Saved')});
+
+/* ---------- papers ---------- */
+const INS='<p><i>Read the instructions in each section. Write your answers in the spaces provided.</i></p>',SH={A:'SECTION A: One answer each',B:'SECTION B: Two or more answers',C:'SECTION C: Questions with parts'};
+const pHead=(p,who)=>`<div class=ph><h1>${esc(SS.name)}</h1><h2>${esc(p.subject)}</h2><h3>${esc(p.title)}</h3><div class=mt><span>Class: <b>${esc(p.cls)}</b></span><span>Term ${esc(p.term)}</span><span>Date: ${esc(p.pdate||'')}</span><span>Teacher: ${esc(p.tn||'')}</span></div>${who!==undefined?`<div class=mt><span>Name: <b>${who?esc(who):'______________________________'}</b></span><span>Total marks: <b>${p.max}</b></span></div>`:''}</div>`;
+const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const shuf=(a,seed)=>{const r=rng(seed),b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+const order=(qs,p,lid)=>{let n=0;return['A','B','C'].flatMap(s=>{let g=qs.filter(q=>q.sec===s);if(+p.shuffle&&lid)g=shuf(g,+lid*1000+ +p.id);return g}).map(q=>({...q,dn:++n}))};
+const getP=async pid=>{const p=(await db('select p.*,u.name tn from x_papers p left join x_users u on u.id=p.teacher_id where p.id=?',[pid]))[0],qs=await db('select * from x_questions where paper_id=? order by n',[pid]),ps=await db('select * from x_parts where paper_id=? order by qn,id',[pid]);
+ qs.forEach(q=>q.parts=ps.filter(x=>x.qq==q.id));p.max=ps.reduce((a,x)=>a+x.marks*x.spaces,0);return[p,qs,ps]};
+const pBlock=(p,inp,seed)=>{const d=JSON.parse(p.data||'{}'),k=p.kind,sp=+p.spaces;let b='';
+ const hd=p.label?`<div class=pl2>(${p.label}) ${esc(p.text)} <span class=mkq>[${p.marks*sp}]</span></div>`:p.text?`<div><i>${esc(p.text)}</i></div>`:'';
+ if(k==='text')b=Array.from({length:sp},()=>inp?'<textarea class=an></textarea>':'<div class=ln></div>').join('');
+ else if(k==='mcq')b=(d.opts||[]).map((o,i)=>`<label class=opt>${inp?`<input type=radio name=r${p.id} value="${esc(o)}">`:'○ '}${'ABCD'[i]}. ${esc(o)}</label>`).join('');
+ else if(k==='gap'){const seg=(d.s||'').split('___');b=`<div class=gp>${seg.map((s,i)=>esc(s)+(i<seg.length-1?(inp?'<input class=gi>':'<span class=bl></span>'):'')).join('')}</div>`}
+ else{const bs=shuf(d.b||[],seed*7+ +p.id);b=`<div>${(d.a||[]).map((a,i)=>`<div class=mrow><span class=slot data-v="" ${inp?'onclick="slotTap(this)" ondragover="event.preventDefault()" ondrop="dropS(event,this)"':''}></span><span>${i+1}. ${esc(a)}</span></div>`).join('')}</div><div class=pool>${bs.map(x=>`<span class=chip data-t="${esc(x)}" ${inp?'draggable=true ondragstart="dragS(event,this)" onclick="chipTap(this)"':''}>${esc(x)}</span>`).join('')}</div>`}
+ return `<div class=pp data-p=${p.id} data-k=${k}>${hd}${b}</div>`};
+const qBlock=(q,inp,seed)=>{const tot=q.parts.reduce((a,x)=>a+x.marks*x.spaces,0);return `<div class=qq><b>${q.dn}.</b> ${esc(q.stem)} <span class=mkq>[${tot}]</span>${q.parts.map(p=>pBlock(p,inp,seed)).join('')}</div>`};
+const paperBody=(os,inp,seed)=>{let last='';return os.map(q=>{const h=q.sec!==last?`<h3 class=sec>${SH[q.sec]}</h3>`:'';last=q.sec;return h+qBlock(q,inp,seed)}).join('')};
+function chipTap(c){if(c.classList.contains('used'))return;$$('.chip.sel').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');SELC=c}
+function putC(s,c){if(!c||c.classList.contains('used'))return;if(s.dataset.v)freeS(s);s.textContent=c.dataset.t;s.dataset.v=c.dataset.t;c.classList.add('used');c.classList.remove('sel');SELC=null}
+function freeS(s){s.closest('.pp').querySelectorAll('.chip').forEach(c=>{if(c.dataset.t===s.dataset.v)c.classList.remove('used')});s.dataset.v='';s.textContent=''}
+function slotTap(s){if(SELC)putC(s,SELC);else if(s.dataset.v)freeS(s)}
+function dragS(e,c){e.dataTransfer.setData('text','x');SELC=c}
+function dropS(e,s){e.preventDefault();putC(s,SELC)}
+const qView=safe(async pid=>{const [p,qs]=await getP(pid);$('#v').innerHTML=`<div class=row><button class="pri np" onclick="pdf()">Download PDF</button><button class="pri ghost np" onclick="print()">Print</button></div><br><div class="paper sheet" data-f="${esc(p.title)} question paper">${pHead(p,'')}${INS}${paperBody(order(qs,p,0),false,0)}</div><button class="pri ghost np" onclick="nav('papers')">Back</button>`});
+const vPapers=async()=>{const r=await db('select p.*,(select count(*) from x_submissions where paper_id=p.id) s from x_papers p where school_id=? order by id desc',[U.sid]);
+ $('#v').innerHTML=`<button class=pri onclick="newPaper()">Set a new paper</button><br><br>`+(r.map(p=>`<div class=card><div class=row><b>${esc(p.title)}</b><span class=tag>${p.status}</span></div><div class=m>${esc(p.cls)} · ${esc(p.subject)} · Term ${esc(p.term)} · ${p.s} submitted<br>${p.deadline?'Deadline: '+fd(p.deadline):'No deadline'}</div>
+ <div class=row style="margin-top:8px">${+p.s?'':`<button class=ghost onclick="editor(${p.id})">Edit${p.status==='draft'?' and post':''}</button>`}<button class=ghost onclick="qView(${p.id})">Question paper</button><button class=ghost onclick="markHome(${p.id})">Mark</button></div>
+ <div class=row style="margin-top:6px"><button class=ghost onclick="sheet(${p.id})">Marksheet</button><button class=ghost onclick="bulk(${p.id})">All scripts</button><button class=ghost onclick="rel(${p.id},'${p.status==='released'?'open':'released'}')">${p.status==='released'?'Hide results':'Release results'}</button></div>
+ ${p.status!=='draft'?`<div class=row style="margin-top:6px"><button class=ghost onclick="sharePaper(${p.id})">Share on WhatsApp</button><button class=ghost onclick="notify(${p.id})">Notify by SMS or email</button></div>`:''}</div>`).join('')||'<p class=m>No papers yet.</p>')};
+const rel=safe(async(id,s)=>{await db('update x_papers set status=? where id=?',[s,id]);vPapers()});
+const sharePaper=safe(async pid=>{const [p]=await getP(pid);wa(`${SS.name}: ${p.subject} paper "${p.title}" for ${p.cls} by ${p.tn}. ${p.deadline?'Deadline: '+fd(p.deadline)+'.':''} Open ${base()}?p=${pid} and sign in with your school code and your 4-digit code. Only ${p.cls} learners can open it.`)});
+const newPaper=safe(async()=>{await loadRef();if(!CLS.length||!SUBS.length){alert('Add classes and subjects first');return nav('cls')}
+ $('#v').innerHTML=`<div class=card><h3>New paper</h3><input id=pt placeholder="Paper title, for example End of Term 2 Test"><select id=pcl>${myCls().map(c=>`<option>${esc(c.name)}</option>`).join('')}</select><div class=row><select id=pm><option>1</option><option>2</option><option>3</option></select><select id=ps>${SUBS.map(c=>`<option value="${esc(c.name)}">${esc(c.name)} (${esc(c.short)})</option>`).join('')}</select></div>
+ <label class=m>Date of paper<input id=pdt type=date value="${new Date().toISOString().slice(0,10)}"></label><label class=m>Deadline for learners (optional). Leave empty to accept work at any time.<input id=pdl type=datetime-local></label>
+ <label class=row><span>Shuffle the order of questions for each learner</span><input id=psh type=checkbox checked style="flex:0 0 24px"></label>
+ <label class=m>How many questions do you want?<input id=pq type=number min=1 value=5></label><p class=m>How many answer spaces at each Bloom level? (Multiple choice counts under Application.)</p>${L.map((l,i)=>`<label class=row>${l}<input type=number min=0 value=0 id=n${i} style="max-width:90px"></label>`).join('')}<button onclick="mkPaper()">Next: write the questions</button></div>`});
+const mkPaper=safe(async()=>{if(!val('pt'))throw new Error('Enter the paper title');const plan={q:+val('pq')||1,b:L.map((_,i)=>+val('n'+i)||0)};
+ const id=await ins("insert into x_papers(school_id,teacher_id,title,cls,term,subject,status,pdate,deadline,plan,shuffle) values(?,?,?,?,?,?,'draft',?,?,?,?) returning id",[U.sid,U.id,val('pt'),val('pcl'),val('pm'),val('ps'),val('pdt'),val('pdl')||null,JSON.stringify(plan),$('#psh').checked?1:0]);editor(id,plan.q)});
+
+/* ---------- question editor ---------- */
+const KS=[['text','Written answer'],['mcq','Multiple choice'],['gap','Fill in the gap'],['match','Matching']];
+const mrows=(a,b)=>a.map((x,i)=>`<div class=row><input class=ma placeholder="List A ${i+1}" value="${esc(x)}"><input class=mb placeholder="Match ${i+1} (List B)" value="${esc(b[i]||'')}"></div>`).join('');
+const pbody=(k,p,d)=>k==='mcq'?`${[0,1,2,3].map(i=>`<input class=mo placeholder="Option ${'ABCD'[i]}" value="${esc((d.opts||[])[i]||'')}">`).join('')}<label class=m>Correct option<select class=mc>${'ABCD'.split('').map((x,i)=>`<option value=${i} ${i==(d.ans||0)?'selected':''}>${x}</option>`).join('')}</select></label>`
+ :k==='gap'?`<textarea class=gt placeholder="Type the sentence and put ___ where each gap is. Example: The ___ is the brain of the computer.">${esc(d.s||'')}</textarea><textarea class=ga placeholder="Correct answer for each gap, one per line. Use | between accepted answers.">${esc((d.ans||[]).join('\n'))}</textarea>`
+ :k==='match'?`<label class=m>Number of items in List A<input class=mn type=number min=2 max=12 value=${(d.a||['','','']).length} oninput="mRows(this)"></label><div class=mr>${mrows(d.a||['','',''],d.b||['','',''])}</div><p class=m>The List B box in the same row is the correct match. Learners see List B shuffled.</p>`
+ :`<label class=m>Answer spaces needed<input class=ps type=number min=1 value=${p.spaces||1} oninput="trk()"></label>`;
+const pcard=(p,i,hp)=>{const d=typeof p.data==='string'?JSON.parse(p.data||'{}'):(p.data||{});return `<div class=pt><div class=row><b class=pl>${hp?'('+String.fromCharCode(97+i)+')':''}</b><a class=rp onclick="rmPart(this)" ${hp&&i>0?'':'hidden'}>Remove part</a></div>
+ <textarea class=pxt placeholder="${hp?'Part question':'Instruction (optional)'}">${esc(p.text)}</textarea><div class=row><select class=pk onchange="pkChg(this)">${KS.map(k=>`<option value=${k[0]} ${k[0]===p.kind?'selected':''}>${k[1]}</option>`).join('')}</select><select class=pb onchange="trk()" ${p.kind==='mcq'?'disabled':''}>${L.map(l=>`<option ${l===p.bloom?'selected':''}>${l}</option>`).join('')}</select></div>
+ <div class=pbody>${pbody(p.kind,p,d)}</div><label class=m>Marks for each answer<input class=pm type=number min=1 value=${p.marks||1}></label><textarea class=pg placeholder="Marking guide (optional)">${esc(p.guide)}</textarea></div>`};
+const NP={kind:'text',marks:1,spaces:1,bloom:'Knowledge',text:'',data:'{}',guide:'',label:''};
+const qcard=q=>{const ps=q?q.parts:[NP],hp=ps.length>1||(ps[0].label||'')!=='';return `<div class="card qc" data-t="${q?q.topic_id||'':''}" data-s="${q?q.sub_id||'':''}" data-c="${q?q.comp_id||'':''}"><div class=row><b class=qn></b><a onclick="this.closest('.qc').remove();trk()">Remove question</a></div>
+ <select class=qtp onchange="fillSub(this)"></select><div class="wr m"></div><select class=qst onchange="fillComp(this.closest('.qc'))"></select><select class=qcp></select>
+ <textarea class=qt placeholder="Question (the main statement)">${esc(q?q.stem:'')}</textarea><label class=row><span>This question has parts (a), (b), (c)</span><input type=checkbox class=hp ${hp?'checked':''} onchange="hpChg(this)" style="flex:0 0 24px"></label>
+ <div class=parts>${ps.map((p,i)=>pcard(p,i,hp)).join('')}</div><a class=ap ${hp?'':'hidden'} onclick="addPart(this)">+ Add part</a></div>`};
+function relabel(c){const hp=c.querySelector('.hp').checked;c.querySelectorAll('.pt').forEach((e,i)=>{e.querySelector('.pl').textContent=hp?'('+String.fromCharCode(97+i)+')':'';e.querySelector('.rp').hidden=!(hp&&i>0);e.querySelector('.pxt').placeholder=hp?'Part question':'Instruction (optional)'});c.querySelector('.ap').hidden=!hp}
+function hpChg(cb){const c=cb.closest('.qc');if(!cb.checked){const ps=c.querySelectorAll('.pt');if(ps.length>1){if(!confirm('Remove all parts except the first?')){cb.checked=true;return}[...ps].slice(1).forEach(e=>e.remove())}}relabel(c);trk()}
+function addPart(a){const c=a.closest('.qc'),n=c.querySelectorAll('.pt').length;c.querySelector('.parts').insertAdjacentHTML('beforeend',pcard(NP,n,true));relabel(c);trk()}
+function rmPart(a){const c=a.closest('.qc');a.closest('.pt').remove();relabel(c);trk()}
+function pkChg(sel){const e=sel.closest('.pt'),k=sel.value;e.querySelector('.pbody').innerHTML=pbody(k,{},{});const b=e.querySelector('.pb');if(k==='mcq'){b.value='Application';b.disabled=true}else b.disabled=false;trk()}
+function mRows(el){const p=el.closest('.pt'),a=[...p.querySelectorAll('.ma')].map(x=>x.value),b=[...p.querySelectorAll('.mb')].map(x=>x.value),n=Math.min(12,Math.max(2,+el.value||2));p.querySelector('.mr').innerHTML=mrows(Array.from({length:n},(_,i)=>a[i]||''),Array.from({length:n},(_,i)=>b[i]||''));trk()}
+function readPart(e){const k=e.querySelector('.pk').value,g=s=>e.querySelector(s);let sp=1,data={},bl=g('.pb').value;
+ if(k==='text')sp=Math.max(1,+g('.ps').value||1);
+ if(k==='mcq'){data={opts:[...e.querySelectorAll('.mo')].map(x=>x.value.trim()).filter(Boolean),ans:+g('.mc').value};bl='Application'}
+ if(k==='gap'){const t=g('.gt').value;sp=Math.max(1,(t.match(/___/g)||[]).length);data={s:t,ans:g('.ga').value.split('\n').map(x=>x.trim())}}
+ if(k==='match'){const a=[...e.querySelectorAll('.ma')].map(x=>x.value.trim()),b=[...e.querySelectorAll('.mb')].map(x=>x.value.trim());sp=a.length;data={a,b}}
+ return{kind:k,text:g('.pxt').value.trim(),marks:Math.max(1,+g('.pm').value||1),spaces:sp,bloom:bl,data,guide:g('.pg').value.trim()}}
+function trk(){const u={};$$('.pt').forEach(e=>{const r=readPart(e);u[r.bloom]=(u[r.bloom]||0)+r.spaces});const pl=C.plan.b||[];$('#trk').innerHTML=L.map((l,i)=>{const w=pl[i]||0,h=u[l]||0;return `<span class="tag ${w&&h===w?'grn':h>w?'red':w?'org':''}">${l} ${h}/${w}</span>`}).join(' ')}
+function flt(k,v,on){C[k][on?'add':'delete'](v);topics()}
+function topics(){const o=C.tp.filter(x=>C.cls.has(x.cls)&&C.term.has(x.term)).map(x=>`<option value="${x.id}">${esc(x.cls)} T${x.term} · ${esc(x.name)} (set ${x.n}×)${x.n>=SET.overN?' - OVER-SET':''}</option>`).join('')||'<option value="">No topics for this choice</option>';
+ $$('.qc').forEach(c=>{const e=c.querySelector('.qtp'),cur=e.value||c.dataset.t;e.innerHTML=o;if([...e.options].some(x=>x.value===String(cur)))e.value=cur;fillSub(e)})}
+function fillSub(e){const c=e.closest('.qc'),t=e.value,q=c.querySelector('.qst'),cur=q.value||c.dataset.s;q.innerHTML='<option value="">Subtopic (optional)</option>'+opts(C.st.filter(x=>x.topic_id==t));if(cur)q.value=cur;fillComp(c);
+ const tp=C.tp.find(x=>x.id==t);c.querySelector('.wr').innerHTML=tp&&tp.n>=SET.overN?`<span class=red>You have already set ${tp.n} questions on this topic. Consider another topic.</span>`:''}
+function fillComp(c){const t=c.querySelector('.qtp').value,s=c.querySelector('.qst').value,q=c.querySelector('.qcp'),cur=q.value||c.dataset.c;q.innerHTML='<option value="">Competence (optional)</option>'+opts(C.cp.filter(x=>s?x.sub_id==s:x.topic_id==t));if(cur)q.value=cur}
+const addQ=()=>{$('#qs').insertAdjacentHTML('beforeend',qcard(null));topics();trk()};
+const editor=safe(async(pid,nb)=>{const p=(await db('select * from x_papers where id=?',[pid]))[0];if(+(await db('select count(*) c from x_submissions where paper_id=?',[pid]))[0].c)throw new Error('Learners have already submitted this paper, so it cannot be edited');
+ const [tp,st,cp,qs,ps]=await Promise.all([db('select t.*,(select count(*) from x_questions q join x_papers pp on pp.id=q.paper_id where q.topic_id=t.id and pp.teacher_id like ?) n from x_topics t where school_id=? and lower(subject)=lower(?)',[TF(),U.sid,p.subject]),
+ db('select * from x_subtopics where topic_id in(select id from x_topics where school_id=?)',[U.sid]),db('select * from x_comps where topic_id in(select id from x_topics where school_id=?)',[U.sid]),db('select * from x_questions where paper_id=? order by n',[pid]),db('select * from x_parts where paper_id=? order by qn,id',[pid])]);
+ C={p,tp,st,cp,plan:JSON.parse(p.plan||'{}'),cls:new Set([p.cls]),term:new Set([p.term])};const cards=qs.length?qs.map(q=>({...q,parts:ps.filter(x=>x.qq==q.id)})):Array.from({length:nb||C.plan.q||1},()=>null);
+ $('#v').innerHTML=`<div class=card><b>${esc(p.title)}</b> <span class=m>${esc(p.cls)} · ${esc(p.subject)} · Term ${p.term}</span><p class=m>Pick questions from these classes and terms:</p><div class=chips>${CLS.map(c=>`<label><input type=checkbox style="width:auto" ${c.name===p.cls?'checked':''} onchange="flt('cls','${esc(c.name)}',this.checked)"> ${esc(c.name)}</label>`).join('')}</div><div class=chips>${['1','2','3'].map(x=>`<label><input type=checkbox style="width:auto" ${x===String(p.term)?'checked':''} onchange="flt('term','${x}',this.checked)"> Term ${x}</label>`).join('')}</div></div>
+ <div class=card style="position:sticky;top:50px;z-index:4"><b>Answer spaces by level (used / planned)</b><div id=trk></div></div><div id=qs>${cards.map(qcard).join('')}</div>
+ <button class="pri ghost" onclick="addQ()">+ Add question</button><br><br><div class=row><button class="pri ghost" onclick="saveDraft(${pid})">Save draft</button><button class=pri onclick="postPaper(${pid})">Post and notify learners</button></div>`;topics();trk()});
+async function collect(){const cs=$$('.qc');if(!cs.length)throw new Error('Add at least one question');const out=[];
+ for(const c of cs){const g=k=>c.querySelector(k),hp=g('.hp').checked,ps=[...c.querySelectorAll('.pt')].map(readPart);
+  if(!g('.qtp').value)throw new Error('Choose a topic for every question');if(!g('.qt').value.trim()&&!ps.some(p=>p.text))throw new Error('Write every question');
+  for(const p of ps){if(p.kind==='mcq'&&p.data.opts.length<2)throw new Error('Multiple choice needs at least two options');if(p.kind==='match'&&p.data.a.some(x=>!x)||p.kind==='match'&&p.data.b.some(x=>!x))throw new Error('Fill every box in both matching lists');if(p.kind==='gap'&&!p.data.s.includes('___'))throw new Error('Put ___ where each gap should be')}
+  out.push({stem:g('.qt').value.trim(),t:g('.qtp').value,s:g('.qst').value||null,c:g('.qcp').value||null,hp,sec:hp?'C':ps[0].spaces>1?'B':'A',ps})}
+ return out.map((q,i)=>({q,i})).sort((a,b)=>a.q.sec.localeCompare(b.q.sec)||a.i-b.i).map(x=>x.q)}
+async function persist(pid){const qs=await collect();if(+(await db('select count(*) c from x_submissions where paper_id=?',[pid]))[0].c)throw new Error('Learners have already submitted');
+ await pipe([['delete from x_parts where paper_id=?',[pid]],['delete from x_questions where paper_id=?',[pid]]]);
+ for(const [i,q] of qs.entries()){const qid=await ins('insert into x_questions(paper_id,n,sec,stem,topic_id,sub_id,comp_id) values(?,?,?,?,?,?,?) returning id',[pid,i+1,q.sec,q.stem,q.t,q.s,q.c]);
+  await pipe(q.ps.map((p,j)=>['insert into x_parts(paper_id,qq,qn,label,n,text,kind,marks,spaces,bloom,data,guide) values(?,?,?,?,?,?,?,?,?,?,?,?)',[pid,qid,i+1,q.hp?String.fromCharCode(97+j):'',''+(i+1)+(q.hp?'('+String.fromCharCode(97+j)+')':''),p.text,p.kind,p.marks,p.spaces,p.bloom,JSON.stringify(p.data),p.guide]]))}}
+const saveDraft=safe(async pid=>{await persist(pid);alert('Draft saved')});
+const postPaper=safe(async pid=>{await persist(pid);await db("update x_papers set status='open' where id=? and status='draft'",[pid]);notify(pid)});
+const notify=safe(async pid=>{const [p]=await getP(pid),r=await db("select name,phone,email from x_users where school_id=? and role='learner' and lower(cls)=lower(?)",[U.sid,p.cls]);
+ const ph=r.map(x=>(x.phone||'').replace(/\s/g,'')).filter(Boolean),em=r.map(x=>x.email).filter(Boolean);NT={ph,em,p};
+ const msg=`${SS.name}: New ${p.subject} paper "${p.title}" for ${p.cls} from ${p.tn}. ${p.deadline?'Deadline: '+fd(p.deadline)+'.':'No deadline.'} Total marks: ${p.max}. Open: ${base()}?p=${pid}`;
+ $('#v').innerHTML=`<div class=card><b>Paper posted. Tell learners about it.</b><p class=m>${r.length} learner(s) in ${esc(p.cls)} · ${ph.length} with a phone number · ${em.length} with an email.</p><textarea id=nm2 style="min-height:110px">${esc(msg)}</textarea><button onclick="wa($('#nm2').value)">Share on WhatsApp</button><button onclick="sendSms()">Open SMS app with all numbers</button><button onclick="sendMail()">Open email with all addresses</button>${SET.hook?'<button onclick="sendHook()">Send automatically</button>':''}<button class=ghost onclick="nav('papers')">Done</button></div>`});
+const sendSms=()=>{if(!NT.ph.length)return alert('No phone numbers yet. Add them under Learners.');location.href='sms:'+NT.ph.join(',')+'?body='+encodeURIComponent($('#nm2').value)};
+const sendMail=()=>{if(!NT.em.length)return alert('No email addresses yet. Add them under Learners.');location.href='mailto:?bcc='+encodeURIComponent(NT.em.join(','))+'&subject='+encodeURIComponent('New paper: '+NT.p.title)+'&body='+encodeURIComponent($('#nm2').value)};
+const sendHook=safe(async()=>{await fetch(SET.hook,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({school:SS.name,subject:'New paper: '+NT.p.title,phones:NT.ph,emails:NT.em,message:$('#nm2').value})});alert('Sent to your notification service')});
+
+/* ---------- marking: one question at a time, identical answers marked once ---------- */
+const markHome=safe(async pid=>{PID=pid;QS=await db('select q.id,q.n,q.text,q.bloom,(select count(*) from x_answers a where a.qid=q.id) c,(select count(score) from x_answers a where a.qid=q.id) mk from x_parts q where paper_id=? order by qn,id',[pid]);
+ $('#v').innerHTML=`<button class="pri ghost" onclick="nav('papers')">Back to papers</button><br><br>`+QS.map((q,i)=>`<div class="card row" onclick="markQ(${i})"><span><b>Q${q.n}</b> <span class=m>${q.bloom}</span><br>${esc(q.text.slice(0,70))}</span><span class="tag ${q.c&&q.mk>=q.c?'grn':q.c?'org':''}">${q.c?q.mk+'/'+q.c+' marked':'no answers'}</span></div>`).join('')});
+const markQ=safe(async i=>{QI=i;const q=(await db('select * from x_parts where id=?',[QS[i].id]))[0];
+ G=await db('select a.norm n,min(a.answer) ans,count(*) c,count(a.score) mk,min(a.score) sc,max(a.comment) cm,group_concat(u.name,\', \') names from x_answers a join x_submissions s on s.id=a.sub_id join x_users u on u.id=s.learner_id where a.qid=? group by a.norm order by (count(a.score)<count(*)) desc,c desc',[q.id]);
+ const un=G.filter(g=>+g.mk<+g.c).length,mx=q.marks,v=[...Array(Math.min(mx,10)+1).keys()];
+ $('#v').innerHTML=`<div class=card><b>Q${q.n}</b> <span class=m>${q.bloom} · ${mx} mark(s) per answer · ${q.spaces} space(s)</span><p>${esc(q.text)}</p>${q.guide?`<div class="m">Guide: ${esc(q.guide)}</div>`:''}<p class=m>${un?un+' different answer(s) left to mark. Tap an answer to see who wrote it and add a comment.':'All marked.'}</p></div>`+
+ G.map((g,k)=>`<div class=card><div class=row onclick="$('#d${k}').hidden=!$('#d${k}').hidden"><b style="flex:3">${esc(g.ans)||'(no answer)'}</b><span class="tag ${+g.mk<+g.c?'org':'grn'}">${g.c} learner(s)</span></div>
+ <div class=sc>${v.map(x=>`<button class="${+g.mk>=+g.c&&+g.sc===x?'on':''}" onclick="setMark(${k},${x})">${x}</button>`).join('')}</div>
+ <div id=d${k} ${+g.mk<+g.c&&g.n?'hidden':''}><div class=m>Written by: ${esc(g.names)}</div><input id=c${k} placeholder="Comment for this answer (shown in the script)" value="${esc(g.cm)}"></div></div>`).join('')+
+ `<div class=row><button class="pri ghost" onclick="markQ(${Math.max(0,i-1)})">Previous</button><button class=pri onclick="${i+1<QS.length?`markQ(${i+1})`:`markHome(${PID})`}">${i+1<QS.length?'Next question':'Finish'}</button></div>`});
+const setMark=safe(async(k,x)=>{const g=G[k],qid=QS[QI].id,cm=$('#c'+k).value.trim();await db('update x_answers set score=?,comment=? where qid=? and norm=?',[x,cm||null,qid,g.n]);
+ const left=(await db('select count(*) n from x_answers where qid=? and score is null',[qid]))[0].n;
+ if(+left===0&&QI+1<QS.length)markQ(QI+1);else if(+left===0){alert('All questions marked');markHome(PID)}else markQ(QI)});
+
+/* ---------- scripts, marksheet, bulk ---------- */
+const corr=(pt,d,i)=>pt.kind==='mcq'?(d.opts||[])[d.ans||0]:pt.kind==='gap'?((d.ans||[])[i]||'').split('|')[0]:(d.b||[])[i];
+async function script(sid){const h=(await db('select s.paper_id,s.learner_id lid,u.name lname from x_submissions s join x_users u on u.id=s.learner_id where s.id=?',[sid]))[0];
+ const [p,qs]=await getP(h.paper_id),a=await db('select * from x_answers where sub_id=? order by qid,idx',[sid]);let tot=0,last='';
+ const body=order(qs,p,h.lid).map(q=>{let qt=0,qm=0;const inner=q.parts.map(pt=>{const r=a.filter(y=>y.qid==pt.id),d=JSON.parse(pt.data||'{}');qt+=r.reduce((s,y)=>s+(+y.score||0),0);qm+=pt.marks*pt.spaces;
+  return (pt.label?`<div class=pl2>(${pt.label}) ${esc(pt.text)}</div>`:pt.text?`<div><i>${esc(pt.text)}</i></div>`:'')+r.map((y,i)=>{const lab=pt.kind==='match'?`<span style="color:#555">${i+1}. ${esc((d.a||[])[i])} → </span>`:pt.kind==='gap'?`<span style="color:#555">Gap ${i+1}: </span>`:r.length>1?`<span style="color:#555">(${i+1}) </span>`:'',sc=+y.score||0,ok=sc>=pt.marks;
+   return `<div class=ln>${lab}${esc(y.answer)||'<i>No answer</i>'}<span class=mk>${ok?'✓':sc>0?'~':'✗'} ${sc}/${pt.marks}</span></div>${!ok&&pt.kind!=='text'?`<div class=gd>Correct: ${esc(corr(pt,d,i))}</div>`:''}${y.comment?`<div class=cmx>${esc(y.comment)}</div>`:''}`}).join('')+(pt.guide?`<div class=gd>Expected answer: ${esc(pt.guide)}</div>`:'')}).join('');
+  tot+=qt;const hd=q.sec!==last?`<h3 class=sec>${SH[q.sec]}</h3>`:'';last=q.sec;return `${hd}<div class=qq><b>${q.dn}.</b> ${esc(q.stem)} <span class=mkq>[${qm}]</span>${inner}<div class=tot>${qt}/${qm}</div></div>`}).join('');
+ const pr=pc([tot,p.max]),b=band(pr);return `<div class="sheet paper" data-f="${esc(h.lname+' - '+p.title)}"><div class=score>${tot}/${p.max}</div>${pHead(p,h.lname)}<p><b>${pr}%${gtxt(pr)} · ${esc(b.name)}</b> ${esc(b.c)}</p>${body}</div>`}
+const pdf=safe(async()=>{const els=$$('.sheet');if(!els.length)return;
+ if(!window.html2pdf)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=ok;s.onerror=()=>no(new Error('Could not load the PDF tool. Check your internet, or use Print and choose Save as PDF.'));document.head.appendChild(s)});
+ const box=document.createElement('div');els.forEach(e=>box.appendChild(e.cloneNode(true)));
+ await html2pdf().set({margin:8,filename:els.length>1?'MELAN scripts.pdf':(els[0].dataset.f||'MELAN')+'.pdf',image:{type:'jpeg',quality:.92},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4'},pagebreak:{mode:['css','legacy'],after:'.sheet'}}).from(box).save()});
+const dlBtns=`<div class=row><button class="pri np" onclick="pdf()">Download PDF</button><button class="pri ghost np" onclick="print()">Print</button></div><br>`;
+const showScript=safe(async(sid,back)=>{$('#v').innerHTML=dlBtns+await script(sid)+`<button class="pri ghost np" onclick="${back}">Back</button>`});
+const bulk=safe(async pid=>{const r=await db('select s.id from x_submissions s join x_users u on u.id=s.learner_id where paper_id=? order by u.name',[pid]);let h='';for(const x of r)h+=await script(x.id);
+ $('#v').innerHTML=dlBtns+(r.length>1?'<p class="m np">One PDF with '+r.length+' scripts. It may take a minute.</p>':'')+h+`<button class="pri ghost np" onclick="nav('papers')">Back</button>`});
+const sheet=safe(async(pid,mode)=>{mode=mode||'n';const [p,qs,ps]=await getP(pid);
+ const r=await db('select s.id sid,u.name,u.cno,u.gender,a.qid,sum(a.score) sc from x_submissions s join x_users u on u.id=s.learner_id join x_answers a on a.sub_id=s.id where s.paper_id=? group by s.id,a.qid',[pid]);
+ const qn={};ps.forEach(x=>qn[x.id]=x.qn);const nums=[...new Set(ps.map(x=>x.qn))],Lr={};
+ r.forEach(x=>{const l=Lr[x.sid]??={n:x.name,c:x.cno,g:x.gender,q:{},t:0};l.q[qn[x.qid]]=(l.q[qn[x.qid]]||0)+(+x.sc||0);l.t+=+x.sc||0});
+ const rows=Object.entries(Lr).map(([id,l])=>({id,...l,p:pc([l.t,p.max])})).sort((a,b)=>b.p-a.p),nm=mode==='n';
+ $('#v').innerHTML=`<div class="card np"><select onchange="sheet(${pid},this.value)"><option value=n ${nm?'selected':''}>With learner names (for teachers)</option><option value=c ${nm?'':'selected'}>Candidate numbers only (safe to share with learners)</option></select></div>`+dlBtns+
+ `<div class="paper sheet wrap" data-f="${esc(p.title)} marksheet ${nm?'names':'codes'}">${pHead(p)}<h3 style="text-align:center">MARKSHEET</h3><table><tr><th>${nm?'Name':'Candidate no.'}</th>${nm?'<th>Sex</th>':''}${nums.map(n=>`<th>Q${n}</th>`).join('')}<th>Total/${p.max}</th><th>%</th>${SET.grades?'<th>Grade</th>':''}<th>Band</th></tr>`+
+ rows.map(l=>`<tr ${nm?`onclick="showScript(${l.id},'sheet(${pid})')"`:''}><td>${esc(nm?l.n:l.c)}</td>${nm?`<td>${esc(l.g)}</td>`:''}${nums.map(n=>`<td>${l.q[n]??'-'}</td>`).join('')}<td>${l.t}</td><td>${l.p}</td>${SET.grades?`<td>${grade(l.p)}</td>`:''}<td>${esc(band(l.p).name)}</td></tr>`).join('')+`</table></div><button class="pri ghost np" onclick="nav('papers')">Back</button>`});
+
+/* ---------- reports ---------- */
+const vRep=safe(async()=>{const [ps,cl]=await Promise.all([db('select id,title from x_papers where school_id=? order by id desc',[U.sid]),db("select distinct cls from x_users where school_id=? and role='learner'",[U.sid])]);
+ $('#v').innerHTML=`<div class=card><select id=rp onchange=rep()><option value="">All papers</option>${opts(ps,'title')}</select><div class=row><select id=rc onchange=rep()><option value="">All classes</option>${cl.map(x=>`<option>${esc(x.cls)}</option>`).join('')}</select><select id=rg onchange=rep()><option value="">Both genders</option><option value=M>Boys</option><option value=F>Girls</option></select></div></div><div id=rb></div>`;rep()});
+const rep=safe(async()=>{const p=val('rp'),c=val('rc'),g=val('rg'),ar=[U.sid];let sql='select a.score,q.id qid,q.n,q.bloom,q.marks,q.paper_id pid,u.id uid,u.name,u.gender,u.cls from x_answers a join x_parts q on q.id=a.qid join x_submissions s on s.id=a.sub_id join x_users u on u.id=s.learner_id join x_papers p on p.id=q.paper_id where p.school_id=? and a.score is not null';
+ if(p){sql+=' and p.id=?';ar.push(p)}if(c){sql+=' and u.cls=?';ar.push(c)}if(g){sql+=' and u.gender=?';ar.push(g)}
+ const r=await db(sql,ar),ad=(o,k,x)=>{const t=o[k]??=[0,0];t[0]+=+x.score;t[1]+=+x.marks},lr={},nm={},bl={},gn={},gb={},qs={},qi={};
+ r.forEach(x=>{const gg=x.gender||'?';ad(lr,x.uid,x);nm[x.uid]=x.name;ad(bl,x.bloom,x);ad(gn,gg,x);ad(gb[gg]??={},x.bloom,x);ad(qs,x.qid,x);qi[x.qid]=x});
+ const ls=Object.entries(lr).map(([k,l])=>({n:nm[k],p:pc(l)})).sort((a,b)=>a.p-b.p),bd={};ls.forEach(l=>{const b=band(l.p);bd[b.name]=(bd[b.name]||0)+1});
+ $('#rb').innerHTML=!r.length?'<p class=m>No marked work yet.</p>':`<div class=card><b>Notification link (optional)</b><p class=m>If you have an SMS or email service, paste its web address here. The app sends it the message, phone numbers and emails.</p><input id=s3 value="${esc(SET.hook||'')}" ${a?'':'disabled'}><b>Performance bands</b>${SET.bands.map(b=>`<div class=row><span>${esc(b.name)} <span class=m>${b.min}%+</span></span><b>${bd[b.name]||0} learner(s)</b></div><div class=m>${esc(b.c)}</div>`).join('')}</div>
+ <div class=card><b>Cognitive level (Bloom)</b>${bars(bl)}</div>
+ <div class=card><b>By gender</b>${Object.keys(gn).map(k=>`<div style="margin:8px 0"><b>${k==='M'?'Boys':k==='F'?'Girls':'Not stated'}: ${pc(gn[k])}%</b>${bars(gb[k])}</div>`).join('')}</div>
+ <div class=card><b>Questions, hardest first</b>${Object.entries(qs).sort((a,b)=>pc(a[1])-pc(b[1])).slice(0,12).map(([id,t])=>`<div class=bar style="grid-template-columns:1fr 42px 42px"><span>Q${qi[id].n} <span class=m>${qi[id].bloom}</span></span><span></span><em>${pc(t)}%</em></div>`).join('')}</div>
+ <div class=card><b>Learners, lowest first</b>${ls.slice(0,40).map(l=>`<div class=row><span>${esc(l.n)}</span><span>${l.p}% · ${esc(band(l.p).name)}</span></div>`).join('')}</div>`});
+
+/* ---------- settings ---------- */
+const vSet=()=>{const bt=SET.bands.map(b=>[b.min,b.name,b.c].join('|')).join('\n');
+ $('#v').innerHTML=`<div class=card><b>${esc(SS.name)}</b><p class=m>School code for learners: <b>${esc(SS.code)}</b><br>Each class has its own code under Classes & subjects.</p></div>
+ <div class=card><b>Over-set reminder</b><p class=m>Warn me when a topic or subtopic has this many questions or more.</p><input id=s1 type=number min=2 value=${SET.overN}>
+ <b>Grading scale (optional)</b><p class=m>One per line, for example 0-39=9 then 40-44=8. Leave empty for no grades.</p><textarea id=s4 style="min-height:110px" placeholder="0-39=9&#10;40-44=8">${esc(SET.grades||'')}</textarea>
+ <b>Performance bands</b><p class=m>One per line: minimum percent | name | comment</p><textarea id=s2 style="min-height:110px">${esc(bt)}</textarea>
+ <b>Notification link (optional)</b><p class=m>If you have an SMS or email service, paste its web address here.</p><input id=s3 value="${esc(SET.hook||'')}"><button onclick="saveSet()">Save settings</button></div>`};
+const saveSet=safe(async()=>{const bands=$('#s2').value.split('\n').map(l=>l.split('|')).filter(x=>x.length>=2).map(x=>({min:+x[0]||0,name:x[1].trim(),c:(x[2]||'').trim()})).sort((a,b)=>b.min-a.min);if(!bands.length)throw new Error('Add at least one band');
+ SET={overN:+val('s1')||6,bands,hook:val('s3'),grades:$('#s4').value.trim()};await db('update x_schools set settings=? where id=?',[JSON.stringify(SET),U.sid]);alert('Saved')});
+
+/* ---------- learner ---------- */
+const lrPapers=()=>db("select p.id,p.title,p.subject,p.status,p.deadline,s.id sid from x_papers p left join x_submissions s on s.paper_id=p.id and s.learner_id=? where p.school_id=? and lower(p.cls)=lower(?) and p.status<>'draft' order by p.id desc",[U.id,U.sid,U.cls||'']);
+const late=d=>d&&new Date(d)<new Date();
+const vLhome=safe(async()=>{const [r,res]=await Promise.all([lrPapers(),db("select p.title,sum(a.score) got,sum(q.marks) mx from x_answers a join x_submissions s on s.id=a.sub_id join x_parts q on q.id=a.qid join x_papers p on p.id=q.paper_id where s.learner_id=? and p.status='released' and a.score is not null group by p.id order by p.id desc limit 3",[U.id])]);
+ const todo=r.filter(p=>!p.sid&&!late(p.deadline));
+ $('#v').innerHTML=`<div class=card><h2 style="margin:0">Hello, ${esc(U.name.split(' ')[0])}</h2><p class=m>${esc(U.cls)} · Your candidate number is <b>${esc(U.cno||'')}</b></p></div>
+ <div class=card><b>Papers to do</b>${todo.map(p=>`<div class=row style="margin:8px 0" onclick="lOpen(${p.id},0,'${p.status}','${esc(p.deadline||'')}')"><span><b>${esc(p.title)}</b><br><span class=m>${esc(p.subject)}${p.deadline?' · due '+fd(p.deadline):''}</span></span><span class=tag>Start</span></div>`).join('')||'<p class=m>Nothing waiting. Well done.</p>'}</div>
+ <div class=card><b>My latest results</b>${res.map(x=>{const q=pc([+x.got,+x.mx]);return `<div class=row style="margin:6px 0"><span>${esc(x.title)}</span><b>${q}%${gtxt(q)}</b></div>`}).join('')||'<p class=m>Results appear here after your teacher releases them.</p>'}<button class=ghost onclick="nav('perf')">See my report</button></div>`});
+const vLp=async()=>{const r=await lrPapers();
+ $('#v').innerHTML=r.map(p=>{const st=!p.sid?(late(p.deadline)?'closed':'to do'):p.status==='released'?'view marked script':'awaiting marks';return `<div class="card row" onclick="lOpen(${p.id},${p.sid||0},'${p.status}','${esc(p.deadline||'')}')"><span><b>${esc(p.title)}</b><br><span class=m>${esc(p.subject)}${p.deadline?' · due '+fd(p.deadline):''}</span></span><span class=tag>${st}</span></div>`}).join('')||'<p class=m>No papers for your class yet.</p>'};
+const lOpen=safe(async(pid,sid,st,dl)=>{if(sid&&st==='released')return showScript(sid,"nav('lp')");if(sid)return alert('Your teacher has not released the marks yet');if(late(dl))return alert('The deadline for this paper has passed');
+ const [p,qs,ps]=await getP(pid);if(p.school_id!=U.sid||(p.cls||'').toLowerCase()!==(U.cls||'').toLowerCase()||p.status==='draft')return alert('This paper is not for your class');
+ PID=pid;DL=dl;PP={};ps.forEach(x=>PP[x.id]=x);$('#v').innerHTML=`<div class=paper>${pHead(p,U.name)}${INS}${paperBody(order(qs,p,U.id),true,U.id)}</div><button class=pri onclick="submitP()">Submit paper</button>`});
+const ansOf=e=>{const k=e.dataset.k;return k==='text'?[...e.querySelectorAll('.an')].map(x=>x.value):k==='mcq'?[(e.querySelector('input:checked')||{}).value||'']:k==='gap'?[...e.querySelectorAll('.gi')].map(x=>x.value):[...e.querySelectorAll('.slot')].map(x=>x.dataset.v||'')};
+const submitP=safe(async()=>{if(late(DL))throw new Error('The deadline has passed');if(!confirm('Submit your answers? You cannot change them after.'))return;
+ if((await db('select id from x_submissions where paper_id=? and learner_id=?',[PID,U.id]))[0])throw new Error('You have already submitted this paper');
+ const s=await ins('insert into x_submissions(paper_id,learner_id) values(?,?) returning id',[PID,U.id]),rows=[];
+ for(const e of $$('.pp')){const pid=e.dataset.p,pt=PP[pid],d=JSON.parse(pt.data||'{}');for(const [i,t] of ansOf(e).entries()){const n=norm(t);let sc=n?null:0;
+  if(n){if(pt.kind==='mcq')sc=n===norm((d.opts||[])[d.ans||0]||'')?pt.marks:0;if(pt.kind==='gap')sc=((d.ans||[])[i]||'').split('|').some(x=>norm(x)===n)?pt.marks:0;if(pt.kind==='match')sc=n===norm((d.b||[])[i]||'')?pt.marks:0}
+  rows.push(['insert into x_answers(sub_id,qid,idx,answer,norm,score) values(?,?,?,?,?,?)',[s,pid,i,t.trim(),n,sc]])}}
+ await pipe(rows);nav('lp')});
+const BM={Knowledge:['Remembering facts, names, words and definitions.','Everything else you learn is built on facts you remember.','Revise your notes every day, use flash cards and say facts aloud.'],
+Understanding:['Explaining ideas in your own words and giving examples.','When you understand, you do not need to memorise everything.','Explain each topic to a friend, or write a short summary in your own words.'],
+Application:['Using what you learnt in a new situation. Multiple choice questions are counted here.','It shows you can use your learning in real life.','Practise many different examples and past questions.'],
+Analysis:['Breaking something into parts, comparing, and finding causes.','It helps you solve problems and see how things connect.','Compare two things in a table and ask why and how.'],
+Evaluation:['Judging, choosing and defending your opinion with reasons.','It helps you make good decisions.','Give your opinion and support it with at least two reasons.'],
+Creation:['Making something new, such as a plan, a design, a story or a solution.','It shows you can think creatively and solve new problems.','Try to design or write your own examples and small projects.']};
+const ans0=(q,d)=>q.guide?q.guide:q.kind==='mcq'?(d.opts||[])[d.ans||0]:q.kind==='gap'?(d.ans||[]).map(x=>x.split('|')[0]).join(', '):q.kind==='match'?(d.a||[]).map((a,i)=>a+' = '+(d.b||[])[i]).join('; '):'';
+const vPerf=safe(async()=>{const r=await db("select a.score,q.id pid,q.n,q.text,q.bloom,q.marks,q.guide,q.kind,q.data,p.title from x_answers a join x_submissions s on s.id=a.sub_id join x_parts q on q.id=a.qid join x_papers p on p.id=q.paper_id where s.learner_id=? and p.status='released' and a.score is not null",[U.id]);
+ if(!r.length)return $('#v').innerHTML='<p class=m>Your report appears after your teacher releases a marked paper.</p>';
+ const ad=(o,k,x)=>{const t=o[k]??=[0,0];t[0]+=+x.score;t[1]+=+x.marks},tot=[0,0],bl={},pp={},qq={},qi={};r.forEach(x=>{tot[0]+=+x.score;tot[1]+=+x.marks;ad(bl,x.bloom,x);ad(pp,x.title,x);ad(qq,x.pid,x);qi[x.pid]=x});
+ const p=pc(tot),b=band(p),lv=L.filter(l=>bl[l]).sort((a,b)=>pc(bl[b])-pc(bl[a])),weak=Object.entries(qq).filter(([,t])=>pc(t)<50).sort((a,b)=>pc(a[1])-pc(b[1])).slice(0,8),wl=lv.filter(l=>pc(bl[l])<50),sl=lv.filter(l=>pc(bl[l])>=70);
+ $('#v').innerHTML=dlBtns+`<div class="paper sheet" data-f="${esc(U.name)} results"><div class=ph><h1>${esc(SS.name)}</h1><h2>My results report</h2><div class=mt><span>${esc(U.name)}</span><span>${esc(U.cls)}</span><span>Candidate ${esc(U.cno||'')}</span></div></div>
+ <h3>Overall: ${p}%${gtxt(p)} · ${esc(b.name)}</h3><p>${esc(b.c)}</p>
+ <h3>Marks by paper</h3>${Object.entries(pp).map(([k,t])=>`<div class=row><span>${esc(k)}</span><b>${t[0]}/${t[1]} (${pc(t)}%)</b></div>`).join('')}
+ <h3>My strengths and weak areas</h3>${bars(bl)}<p>${sl.length?'You are strong in: <b>'+sl.join(', ')+'</b>. ':''}${wl.length?'You need to work on: <b>'+wl.join(', ')+'</b>.':'You have no weak level. Keep going.'}</p>
+ <h3>What each level means</h3>${lv.map(l=>`<div style="margin:8px 0"><b>${l} (${pc(bl[l])}%)</b><br>${BM[l][0]}<br><i>Why it matters:</i> ${BM[l][1]}${pc(bl[l])<70?`<br><b>What to do:</b> ${BM[l][2]}`:''}</div>`).join('')}
+ <h3>Questions I missed most</h3>${weak.map(([id,t])=>{const q=qi[id],d=JSON.parse(q.data||'{}'),a=ans0(q,d);return `<div style="margin:8px 0"><b>${esc(q.title)} Q${esc(q.n)}</b> · ${pc(t)}% · ${q.bloom}<br>${esc(q.text)}${a?`<div class=gd>Correct answer: ${esc(a)}</div>`:''}</div>`}).join('')||'<p>None below 50%. Well done.</p>'}</div>`});
+
+!cfg()?setup():U?start(U).catch(()=>auth()):auth();
+</script></body></html>
